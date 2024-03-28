@@ -24,7 +24,7 @@ searchForm.innerHTML = `
 searchContainer.appendChild(searchForm);
 
 // Extract unique country values from jsonFlights
-const uniqueCountries = new Set(" ");
+const uniqueCountries = new Set(" "); // Initialize with an empty string to add an empty option
 const countries = document.getElementById("country");
 
 for (let item in jsonFlights) {
@@ -42,7 +42,7 @@ uniqueCountries.forEach(country => {
 });
 
 // Extract unique city values from jsonFlights
-const uniqueCities = new Set(" ");
+const uniqueCities = new Set(" "); // Initialize with an empty string to add an empty option
 const cities = document.getElementById("city");
 
 for (let item in jsonFlights) {

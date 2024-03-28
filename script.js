@@ -1,4 +1,4 @@
-﻿
+
 
 
 
@@ -20,6 +20,7 @@ searchForm.innerHTML = `
     <input type="date" id="from" placeholder="מתאריך"><br>
     <input type="date" id="to" placeholder="עד תאריך"><br>
     <button>חיפוש</button>`;
+
 
 searchContainer.appendChild(searchForm);
 
@@ -58,7 +59,6 @@ uniqueCities.forEach(city => {
     option.textContent = city;
     cities.appendChild(option);
 });
-
 
 const tableContainer = document.getElementById("tableContainer");
 const table = document.createElement("table");

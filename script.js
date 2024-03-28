@@ -1,14 +1,80 @@
 ﻿
-const header = document.createElement("h1");
-const tableContainer = document.getElementById("container");
-const table = document.createElement("table");
-const headerRow = document.createElement("tr");
 
+
+
+const header = document.createElement("h1");
 header.innerHTML = "ברוכים הבאים ללוח הטיסות הכי גדול במדינה";
+document.body.insertBefore(header, document.body.firstChild); // Insert at the beginning of the body
+
+const searchContainer = document.getElementById("searchContainer");
+const searchForm = document.createElement("form")
+
+searchForm.innerHTML = `
+<input type="radio" name="typeOfFlight" id="departures">
+<label for="departures">המראות</label><br>
+<input type="radio" name="typeOfFlight" id="arrivals">
+<label for="arrivals">נחיתות</label><br>
+<input type="text" placeholder="מספר טיסה"><br>
+<select name="country" id="country"></select><br>
+<select name="city" id="city"></select><br>
+<input type="date" id="from" placeholder="מתאריך"><br>
+<input type="date" id="to" placeholder="עד תאריך"><br>
+<button>חיפוש</button>`;
+
+searchContainer.appendChild(searchForm);
+
+// Extract unique country values from jsonFlights
+const uniqueCountries = new Set(" ");
+const countries = document.getElementById("country");
+
+for (let item in jsonFlights) {
+    if (jsonFlights[item].country) {
+        uniqueCountries.add(jsonFlights[item].country);
+    }
+}
+
+// Add options to the select element
+uniqueCountries.forEach(country => {
+    const option = document.createElement("option");
+    option.value = country;
+    option.textContent = country;
+    countries.appendChild(option);
+});
+
+// Extract unique city values from jsonFlights
+const uniqueCities = new Set(" ");
+const cities = document.getElementById("city");
+
+for (let item in jsonFlights) {
+    if (jsonFlights[item].city) {
+        uniqueCities.add(jsonFlights[item].city);
+    }
+}
+
+// Add options to the select element
+uniqueCities.forEach(city => {
+    const option = document.createElement("option");
+    option.value = city;
+    option.textContent = city;
+    cities.appendChild(option);
+});
+
+
+
+
+const tableContainer = document.getElementById("tableContainer");
+const table = document.createElement("table");
+
+// Create the table header row
+const headerRow = document.createElement("tr");
+const searchInput = document.createElement("input");
+
 headerRow.innerHTML = "<td>המראות</td><td>נחיתות</td>"
-tableContainer.appendChild(header);
-table.appendChild(headerRow);
 tableContainer.appendChild(table);
+
+
+table.appendChild(headerRow);
+
 
 const bodyRows = document.createElement("tr");
 bodyRows.innerHTML = "<td>מספר הטיסה</td><td>שם מלא של חברת התעופה</td><td>זמן מתוכנן</td>" +

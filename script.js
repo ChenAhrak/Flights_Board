@@ -69,13 +69,10 @@ const searchInput = document.createElement("input");
 
 headerRow.innerHTML = "<td>המראות</td><td>נחיתות</td>"
 tableContainer.appendChild(table);
-
-
 table.appendChild(headerRow);
 
-
 const bodyRows = document.createElement("tr");
-bodyRows.innerHTML = "<td>מספר הטיסה</td><td>שם מלא של חברת התעופה</td><td>זמן מתוכנן</td>" +
+bodyRows.innerHTML = "<td>סוג טיסה</td><td>מספר הטיסה</td><td>שם מלא של חברת התעופה</td><td>זמן מתוכנן</td>" +
     "<td>זמן בפועל</td><td>שם שדה התעופה ביעד / במקור</td>" +
     "<td>שם העיר ביעד / במקור</td><td>ארץ היעד / המקור</td>" +
     "<td>טרמינל</td><td>סטטוס</td>"
@@ -85,14 +82,23 @@ table.appendChild(bodyRows);
 function populateTable() {
     for (let item in jsonFlights) {
         var bodyRow = document.createElement("tr");
-        bodyRow.innerHTML = `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
+        const image = document.createElement("img");
+        image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
+        image.style.display = "block";
+        image.style.margin = "0 auto";
+        image.style.width = "25px";
+        image.style.height = "25px";
+        const firstCell = document.createElement("td");
+        firstCell.appendChild(image);
+        bodyRow.appendChild(firstCell);
+        bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
             `<td>${jsonFlights[item].schedueTime}</td><td>${jsonFlights[item].actualTime}</td>` +
             `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
             `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
         table.appendChild(bodyRow)
-        if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#f6f9d4";
+        if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#afeeee";
         else {
-            bodyRow.style.backgroundColor = "#ffebeb";
+            bodyRow.style.backgroundColor = "#9cffed";
         }
     }
     tableContainer.appendChild(table);
@@ -100,7 +106,7 @@ function populateTable() {
 populateTable();
 
 const tableRows = document.querySelectorAll("tr");
-const lightBlue = "#F0F8FF";
+const lightBlue = "#89CFF0";
 
 function changeRowColor(rows, color) {
     const rowColor = rows.style.backgroundColor;

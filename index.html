@@ -11,26 +11,38 @@
 </head>
 
 <body id="container" dir="rtl">
-    <!-- <h1>ברוכים הבאים ללוח הטיסות הכי גדול במדינה</h1> -->
-    <div id="searchContainer"></div>
+    <h1>ברוכים הבאים ללוח הטיסות הכי גדול במדינה</h1>
+    <div id="searchContainer">
+
+        <input type="radio" name="flight-type" id="departures" value="D">
+        <label for="departures">המראות</label><br>
+        <input type="radio" name="flight-type" id="arrivals" value="A">
+        <label for="arrivals">נחיתות</label><br>
+        <input type="text" id="flight-number" placeholder="מספר טיסה"><br>
+        <select name="country" id="country"></select><br>
+        <select name="city" id="city"></select><br>
+        <input type="date" id="from" placeholder="מתאריך"><br>
+        <input type="date" id="to" placeholder="עד תאריך"><br>
+        <button onclick=filterTable()>חיפוש</button>
+
+    </div>
     <div id="tableContainer">
-        <!-- <table>
-            <tr>
-                <td>נחיתות</td>
-                <td>המראות</td>
-            </tr>
-            <tr>
-                <td>מספר הטיסה</td>
-                <td>שם מלא של חברת התעופה</td>
-                <td>זמן מתוכנן</td>
-               <td>זמן בפועל</td>
-               <td>שם שדה התעופה ביעד / במקור</td>" 
-                <td>שם העיר ביעד / במקור</td>
-                <td>ארץ היעד / המקור</td>" 
-                 <td>טרמינל</td>
-                 <td>סטטוס</td>
-            </tr>
-        </table> -->
+        <table id="flights-table">
+            <thead id="table-header">
+                <tr>
+                    <td>סוג טיסה</td>
+                    <td>מספר הטיסה</td>
+                    <td>שם מלא של חברת התעופה</td>
+                    <td>זמן מתוכנן</td>
+                    <td>זמן בפועל</td>
+                    <td>שם שדה התעופה ביעד / במקור</td>
+                    <td>שם העיר ביעד / במקור</td>
+                    <td>ארץ היעד / המקור</td>
+                    <td>טרמינל</td>
+                    <td>סטטוס</td>
+                </tr>
+            </thead>
+        </table>
     </div>
 
     <script src="script.js"></script>

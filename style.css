@@ -23,7 +23,7 @@ td {
     padding: 5px;
 }
 
-form {
+.searchContainer {
     margin: 100px auto;
     padding: 20px;
     display: flex;

@@ -19,6 +19,11 @@ table {
     border: solid 1px black;
 }
 
+thead{
+    font-weight: bold;
+    text-align: center;
+}
+
 th,
 td {
     border: solid 1px black;

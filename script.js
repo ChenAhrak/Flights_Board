@@ -61,6 +61,16 @@ function populateTable() {
             `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
             `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
         tableBody.appendChild(bodyRow)
+        if (jsonFlights[item].actualTime.toString() != jsonFlights[item].schedueTime.toString()) {
+            //bodyRow.style.fontWeight = "bold";
+            //bodyRow.style.border = "2px dotted black";
+            var fourthChild = bodyRow.children[3];
+            var fifthChild = bodyRow.children[4];
+            fourthChild.style.color = "red";
+            fourthChild.style.fontWeight = "bold";
+            fifthChild.style.color = "red";
+            fifthChild.style.fontWeight = "bold";
+        }
         if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#afeeee";
         else {
             bodyRow.style.backgroundColor = "#9cffed";
@@ -102,6 +112,7 @@ function filterTable() {
                     `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
                     `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
                 tableBody.appendChild(bodyRow)
+
                 if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#afeeee";
                 else {
                     bodyRow.style.backgroundColor = "#9cffed";
@@ -112,7 +123,6 @@ function filterTable() {
         }
     }
 }
-
 
 
 const tableRows = document.querySelectorAll("tr");

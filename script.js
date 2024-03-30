@@ -116,7 +116,7 @@ function filterTable() {
 
 
 const tableRows = document.querySelectorAll("tr");
-const lightBlue = "#89CFF0";
+const lightBlue = "#89cff0";
 
 function changeRowColor(rows, color) {
     const rowColor = rows.style.backgroundColor;

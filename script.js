@@ -52,10 +52,49 @@ const table = document.getElementById("flights-table");
 const tableBody = document.createElement("tbody");
 tableBody.id = "table-body";
 
+
+function fixSchedueTime(itemInJson) { // duplicated function to fix timing format (24 hours issue)
+    var time = new Date(jsonFlights[itemInJson].schedueTime);
+    if (time.getHours() === 24) {
+        time.setHours(schedueTime.getHours() % 24);
+    }
+
+    // Extract year, month, day, hour, and minute
+    const year = time.getFullYear().toString().padStart(2, "0");
+    const month = (time.getMonth() + 1).toString().padStart(2, "0"); // Months are 0-indexed
+    const day = time.getDate().toString().padStart(2, "0");
+    const hour = time.getHours().toString().padStart(2, "0");
+    const minute = time.getMinutes().toString().padStart(2, "0");
+
+    // Manually format the date and time
+    const formattedTime = `${year}/${month}/${day}, ${hour}:${minute}`;
+    return formattedTime;
+}
+
+function fixActualTime(itemInJson) { // duplicated function to fix timing format (24 hours issue)
+    var time = new Date(jsonFlights[itemInJson].actualTime);
+    if (time.getHours() === 24) {
+        time.setHours(schedueTime.getHours() % 24);
+    }
+
+    // Extract year, month, day, hour, and minute
+    const year = time.getFullYear().toString().padStart(2, "0");
+    const month = (time.getMonth() + 1).toString().padStart(2, "0"); // Months are 0-indexed
+    const day = time.getDate().toString().padStart(2, "0");
+    const hour = time.getHours().toString().padStart(2, "0");
+    const minute = time.getMinutes().toString().padStart(2, "0");
+
+    // Manually format the date and time
+    const formattedTime = `${year}/${month}/${day}, ${hour}:${minute}`;
+    return formattedTime;
+}
+
 function populateTable() {
     for (let item in jsonFlights) {
-        const schedueTime = new Date(jsonFlights[item].schedueTime).toLocaleDateString([], { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false }).trim();
-        const actualTime = new Date(jsonFlights[item].actualTime).toLocaleDateString([], { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false }).trim();
+        var schedueTime = fixSchedueTime(item, schedueTime);
+        var actualTime = fixActualTime(item, actualTime)
+        //var schedueTime = new Date(jsonFlights[item].schedueTime).toLocaleDateString([], { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false }).trim(); // to be removed later or changed for easier fixes
+        //var actualTime = new Date(jsonFlights[item].actualTime).toLocaleDateString([], { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false }).trim(); // to be removed later or changed for easier fixes
         var bodyRow = document.createElement("tr");
         const image = document.createElement("img");
         image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
@@ -63,7 +102,6 @@ function populateTable() {
         const firstCell = document.createElement("td");
         firstCell.appendChild(image);
         bodyRow.appendChild(firstCell);
-        bodyRow.addEventListener("onclick", showFullInfo);
         bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
             `<td>${schedueTime}</td><td>${actualTime}</td>` +
             `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
@@ -81,8 +119,8 @@ function populateTable() {
         else {
             bodyRow.style.backgroundColor = "#9cffed";
         }
+
     }
-    //tableBody.id = "table-body";
     table.appendChild(tableBody);
     tableContainer.appendChild(table);
     tableContainer.style.textAlign = "center";
@@ -916,8 +954,10 @@ const tableRows = document.querySelectorAll("tr");
 const lightBlue = "#89cff0";
 
 
-function showFullInfo() { //making a div with flight details visible when selecting a flight (work in progress)
+function showFullInfo() { // making a div with flight details visible when selecting a flight (work in progress)
     perFlightInfo.style.visibility = "visible";
+
+
 }
 
 function changeRowColor(rows, color) {

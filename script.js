@@ -1,4 +1,4 @@
-
+﻿
 
 const searchContainer = document.getElementById("searchContainer");
 
@@ -46,6 +46,8 @@ tableBody.id = "table-body";
 
 function populateTable() {
     for (let item in jsonFlights) {
+        const schedueTime = new Date(jsonFlights[item].schedueTime).toLocaleDateString([], { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false }).trim();
+        const actualTime = new Date(jsonFlights[item].actualTime).toLocaleDateString([], { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false }).trim();
         var bodyRow = document.createElement("tr");
         const image = document.createElement("img");
         image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
@@ -57,7 +59,7 @@ function populateTable() {
         firstCell.appendChild(image);
         bodyRow.appendChild(firstCell);
         bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
-            `<td>${jsonFlights[item].schedueTime}</td><td>${jsonFlights[item].actualTime}</td>` +
+            `<td>${schedueTime}</td><td>${actualTime}</td>` +
             `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
             `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
         tableBody.appendChild(bodyRow)
@@ -82,21 +84,24 @@ function populateTable() {
 populateTable();
 
 function filterTable() {
-
     const flightType = document.getElementsByName("flight-type");
     const flightNumber = document.getElementById("flight-number").value.trim();
     const country = document.getElementById("country").value.trim();
     const city = document.getElementById("city").value.trim();
-    const from = document.getElementById("from").value.trim();
-    const to = document.getElementById("to").value.trim();
+    const from = document.getElementById("from").value;
+    const to = document.getElementById("to").value;
     console.log(country, city, from, to, flightType[0].checked, flightType[1].checked);
-    if (country == "" && city == "" && flightNumber=="" && from == "" && to == "" && !flightType[0].checked && !flightType[1].checked) {
+    if (country == "" && city == "" && flightNumber == "" && from == "" && to == "" && !flightType[0].checked && !flightType[1].checked) {
         alert("Please select a filter");
     }
     else {
         tableBody.innerHTML = "";
         for (let item in jsonFlights) {
-            if (country == jsonFlights[item].country && city == "" && flightNumber=="" && from == "" && to == "" && !flightType[0].checked && !flightType[1].checked) {
+            const schedueTime = new Date(jsonFlights[item].schedueTime).toLocaleDateString([], { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false }).trim();
+            const actualTime = new Date(jsonFlights[item].actualTime).toLocaleDateString([], { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false }).trim();
+
+            // when all filters are empty
+            if (country == jsonFlights[item].country && city == "" && flightNumber == "" && from == "" && to == "" && !flightType[0].checked && !flightType[1].checked) {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
@@ -108,7 +113,7 @@ function filterTable() {
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
                 bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
-                    `<td>${jsonFlights[item].schedueTime}</td><td>${jsonFlights[item].actualTime}</td>` +
+                    `<td>${schedueTime}</td><td>${actualTime}</td>` +
                     `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
                     `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
                 tableBody.appendChild(bodyRow)
@@ -119,7 +124,9 @@ function filterTable() {
                 }
 
             }
-            else if(country == "" && city == jsonFlights[item].city && flightNumber=="" && from == "" && to == "" && !flightType[0].checked && !flightType[1].checked){
+
+            //when only one filter is selected
+            else if (country == "" && city == jsonFlights[item].city && flightNumber == "" && from == "" && to == "" && !flightType[0].checked && !flightType[1].checked) {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
@@ -131,7 +138,7 @@ function filterTable() {
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
                 bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
-                    `<td>${jsonFlights[item].schedueTime}</td><td>${jsonFlights[item].actualTime}</td>` +
+                    `<td>${schedueTime}</td><td>${actualTime}</td>` +
                     `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
                     `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
                 tableBody.appendChild(bodyRow)
@@ -141,7 +148,7 @@ function filterTable() {
                     bodyRow.style.backgroundColor = "#9cffed";
                 }
             }
-            else if(country == "" && city == "" && flightNumber==jsonFlights[item].number && from == "" && to == "" && !flightType[0].checked && !flightType[1].checked){
+            else if (country == "" && city == "" && flightNumber == jsonFlights[item].number && from == "" && to == "" && !flightType[0].checked && !flightType[1].checked) {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
@@ -153,7 +160,7 @@ function filterTable() {
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
                 bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
-                    `<td>${jsonFlights[item].schedueTime}</td><td>${jsonFlights[item].actualTime}</td>` +
+                    `<td>${schedueTime}</td><td>${actualTime}</td>` +
                     `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
                     `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
                 tableBody.appendChild(bodyRow)
@@ -163,7 +170,7 @@ function filterTable() {
                     bodyRow.style.backgroundColor = "#9cffed";
                 }
             }
-            else if(country == "" && city == "" && flightNumber=="" && from == "" && to == "" && flightType[0].checked && flightType[0].value==jsonFlights[item].type){
+            else if (country == "" && city == "" && flightNumber == "" && from == "" && to == "" && flightType[0].checked && flightType[0].value == jsonFlights[item].type) {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
@@ -175,7 +182,7 @@ function filterTable() {
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
                 bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
-                    `<td>${jsonFlights[item].schedueTime}</td><td>${jsonFlights[item].actualTime}</td>` +
+                    `<td>${schedueTime}</td><td>${actualTime}</td>` +
                     `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
                     `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
                 tableBody.appendChild(bodyRow)
@@ -185,7 +192,7 @@ function filterTable() {
                     bodyRow.style.backgroundColor = "#9cffed";
                 }
             }
-            else if(country == "" && city == "" && flightNumber=="" && from == "" && to == "" && flightType[1].checked && flightType[1].value==jsonFlights[item].type){
+            else if (country == "" && city == "" && flightNumber == "" && from == "" && to == "" && flightType[1].checked && flightType[1].value == jsonFlights[item].type) {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
@@ -197,7 +204,7 @@ function filterTable() {
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
                 bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
-                    `<td>${jsonFlights[item].schedueTime}</td><td>${jsonFlights[item].actualTime}</td>` +
+                    `<td>${schedueTime}</td><td>${actualTime}</td>` +
                     `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
                     `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
                 tableBody.appendChild(bodyRow)
@@ -208,10 +215,821 @@ function filterTable() {
                 }
             }
 
-            
+            else if (country == "" && city == "" && flightNumber == "" && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && !flightType[0].checked && !flightType[1].checked) {
+                var bodyRow = document.createElement("tr");
+                const image = document.createElement("img");
+                image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
+                image.style.display = "block";
+                image.style.margin = "0 auto";
+                image.style.width = "25px";
+                image.style.height = "25px";
+                const firstCell = document.createElement("td");
+                firstCell.appendChild(image);
+                bodyRow.appendChild(firstCell);
+                bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
+                    `<td>${schedueTime}</td><td>${actualTime}</td>` +
+                    `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
+                    `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
+                tableBody.appendChild(bodyRow)
+
+                if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#afeeee";
+                else {
+                    bodyRow.style.backgroundColor = "#9cffed";
+                }
+            }
+
+            //when two filters are selected
+            else if (country == jsonFlights[item].country && city == "" && flightNumber == "" && from == "" && to == "" && flightType[0].checked && flightType[0].value == jsonFlights[item].type) {
+                var bodyRow = document.createElement("tr");
+                const image = document.createElement("img");
+                image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
+                image.style.display = "block";
+                image.style.margin = "0 auto";
+                image.style.width = "25px";
+                image.style.height = "25px";
+                const firstCell = document.createElement("td");
+                firstCell.appendChild(image);
+                bodyRow.appendChild(firstCell);
+                bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
+                    `<td>${schedueTime}</td><td>${actualTime}</td>` +
+                    `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
+                    `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
+                tableBody.appendChild(bodyRow)
+
+                if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#afeeee";
+                else {
+                    bodyRow.style.backgroundColor = "#9cffed";
+                }
+            }
+            else if (country == "" && city == jsonFlights[item].city && flightNumber == "" && from == "" && to == "" && flightType[0].checked && flightType[0].value == jsonFlights[item].type) {
+                var bodyRow = document.createElement("tr");
+                const image = document.createElement("img");
+                image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
+                image.style.display = "block";
+                image.style.margin = "0 auto";
+                image.style.width = "25px";
+                image.style.height = "25px";
+                const firstCell = document.createElement("td");
+                firstCell.appendChild(image);
+                bodyRow.appendChild(firstCell);
+                bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
+                    `<td>${schedueTime}</td><td>${actualTime}</td>` +
+                    `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
+                    `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
+                tableBody.appendChild(bodyRow)
+
+                if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#afeeee";
+                else {
+                    bodyRow.style.backgroundColor = "#9cffed";
+                }
+            }
+            else if (country == "" && city == "" && flightNumber == jsonFlights[item].number && from == "" && to == "" && flightType[0].checked && flightType[0].value == jsonFlights[item].type) {
+                var bodyRow = document.createElement("tr");
+                const image = document.createElement("img");
+                image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
+                image.style.display = "block";
+                image.style.margin = "0 auto";
+                image.style.width = "25px";
+                image.style.height = "25px";
+                const firstCell = document.createElement("td");
+                firstCell.appendChild(image);
+                bodyRow.appendChild(firstCell);
+                bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
+                    `<td>${schedueTime}</td><td>${actualTime}</td>` +
+                    `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
+                    `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
+                tableBody.appendChild(bodyRow)
+
+                if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#afeeee";
+                else {
+                    bodyRow.style.backgroundColor = "#9cffed";
+                }
+            }
+            else if (country == jsonFlights[item].country && city == "" && flightNumber == "" && from == "" && to == "" && flightType[1].checked && flightType[1].value == jsonFlights[item].type) {
+                var bodyRow = document.createElement("tr");
+                const image = document.createElement("img");
+                image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
+                image.style.display = "block";
+                image.style.margin = "0 auto";
+                image.style.width = "25px";
+                image.style.height = "25px";
+                const firstCell = document.createElement("td");
+                firstCell.appendChild(image);
+                bodyRow.appendChild(firstCell);
+                bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
+                    `<td>${schedueTime}</td><td>${actualTime}</td>` +
+                    `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
+                    `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
+                tableBody.appendChild(bodyRow)
+
+                if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#afeeee";
+                else {
+                    bodyRow.style.backgroundColor = "#9cffed";
+                }
+            }
+            else if (country == "" && city == jsonFlights[item].city && flightNumber == "" && from == "" && to == "" && flightType[1].checked && flightType[1].value == jsonFlights[item].type) {
+                var bodyRow = document.createElement("tr");
+                const image = document.createElement("img");
+                image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
+                image.style.display = "block";
+                image.style.margin = "0 auto";
+                image.style.width = "25px";
+                image.style.height = "25px";
+                const firstCell = document.createElement("td");
+                firstCell.appendChild(image);
+                bodyRow.appendChild(firstCell);
+                bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
+                    `<td>${schedueTime}</td><td>${actualTime}</td>` +
+                    `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
+                    `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
+                tableBody.appendChild(bodyRow)
+
+                if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#afeeee";
+                else {
+                    bodyRow.style.backgroundColor = "#9cffed";
+                }
+            }
+            else if (country == "" && city == "" && flightNumber == jsonFlights[item].number && from == "" && to == "" && flightType[1].checked && flightType[1].value == jsonFlights[item].type) {
+                var bodyRow = document.createElement("tr");
+                const image = document.createElement("img");
+                image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
+                image.style.display = "block";
+                image.style.margin = "0 auto";
+                image.style.width = "25px";
+                image.style.height = "25px";
+                const firstCell = document.createElement("td");
+                firstCell.appendChild(image);
+                bodyRow.appendChild(firstCell);
+                bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
+                    `<td>${schedueTime}</td><td>${actualTime}</td>` +
+                    `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
+                    `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
+                tableBody.appendChild(bodyRow)
+
+                if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#afeeee";
+                else {
+                    bodyRow.style.backgroundColor = "#9cffed";
+                }
+            }
+            else if (country == "" && city == "" && flightNumber == "" && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && flightType[0].checked && flightType[0].value == jsonFlights[item].type) {
+                var bodyRow = document.createElement("tr");
+                const image = document.createElement("img");
+                image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
+                image.style.display = "block";
+                image.style.margin = "0 auto";
+                image.style.width = "25px";
+                image.style.height = "25px";
+                const firstCell = document.createElement("td");
+                firstCell.appendChild(image);
+                bodyRow.appendChild(firstCell);
+                bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
+                    `<td>${schedueTime}</td><td>${actualTime}</td>` +
+                    `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
+                    `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
+                tableBody.appendChild(bodyRow)
+
+                if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#afeeee";
+                else {
+                    bodyRow.style.backgroundColor = "#9cffed";
+                }
+            }
+            else if (country == "" && city == "" && flightNumber == "" && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && flightType[1].checked && flightType[1].value == jsonFlights[item].type) {
+                var bodyRow = document.createElement("tr");
+                const image = document.createElement("img");
+                image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
+                image.style.display = "block";
+                image.style.margin = "0 auto";
+                image.style.width = "25px";
+                image.style.height = "25px";
+                const firstCell = document.createElement("td");
+                firstCell.appendChild(image);
+                bodyRow.appendChild(firstCell);
+                bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
+                    `<td>${schedueTime}</td><td>${actualTime}</td>` +
+                    `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
+                    `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
+                tableBody.appendChild(bodyRow)
+
+                if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#afeeee";
+                else {
+                    bodyRow.style.backgroundColor = "#9cffed";
+                }
+            }
+            else if (country == jsonFlights[item].country && city == jsonFlights[item].city && flightNumber == "" && from == "" && to == "" && !flightType[0].checked && !flightType[1].checked) {
+                var bodyRow = document.createElement("tr");
+                const image = document.createElement("img");
+                image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
+                image.style.display = "block";
+                image.style.margin = "0 auto";
+                image.style.width = "25px";
+                image.style.height = "25px";
+                const firstCell = document.createElement("td");
+                firstCell.appendChild(image);
+                bodyRow.appendChild(firstCell);
+                bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
+                    `<td>${schedueTime}</td><td>${actualTime}</td>` +
+                    `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
+                    `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
+                tableBody.appendChild(bodyRow)
+
+                if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#afeeee";
+                else {
+                    bodyRow.style.backgroundColor = "#9cffed";
+                }
+            }
+            else if (country == jsonFlights[item].country && city == "" && flightNumber == jsonFlights[item].number && from == "" && to == "" && !flightType[0].checked && !flightType[1].checked) {
+                var bodyRow = document.createElement("tr");
+                const image = document.createElement("img");
+                image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
+                image.style.display = "block";
+                image.style.margin = "0 auto";
+                image.style.width = "25px";
+                image.style.height = "25px";
+                const firstCell = document.createElement("td");
+                firstCell.appendChild(image);
+                bodyRow.appendChild(firstCell);
+                bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
+                    `<td>${schedueTime}</td><td>${actualTime}</td>` +
+                    `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
+                    `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
+                tableBody.appendChild(bodyRow)
+
+                if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#afeeee";
+                else {
+                    bodyRow.style.backgroundColor = "#9cffed";
+                }
+            }
+            else if (country == jsonFlights[item].country && city == "" && flightNumber == "" && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && !flightType[0].checked && !flightType[1].checked) {
+                var bodyRow = document.createElement("tr");
+                const image = document.createElement("img");
+                image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
+                image.style.display = "block";
+                image.style.margin = "0 auto";
+                image.style.width = "25px";
+                image.style.height = "25px";
+                const firstCell = document.createElement("td");
+                firstCell.appendChild(image);
+                bodyRow.appendChild(firstCell);
+                bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
+                    `<td>${schedueTime}</td><td>${actualTime}</td>` +
+                    `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
+                    `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
+                tableBody.appendChild(bodyRow)
+
+                if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#afeeee";
+                else {
+                    bodyRow.style.backgroundColor = "#9cffed";
+                }
+            }
+            else if (country == "" && city == jsonFlights[item].city && flightNumber == jsonFlights[item].number && from == "" && to == "" && !flightType[0].checked && !flightType[1].checked) {
+                var bodyRow = document.createElement("tr");
+                const image = document.createElement("img");
+                image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
+                image.style.display = "block";
+                image.style.margin = "0 auto";
+                image.style.width = "25px";
+                image.style.height = "25px";
+                const firstCell = document.createElement("td");
+                firstCell.appendChild(image);
+                bodyRow.appendChild(firstCell);
+                bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
+                    `<td>${schedueTime}</td><td>${actualTime}</td>` +
+                    `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
+                    `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
+                tableBody.appendChild(bodyRow)
+
+                if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#afeeee";
+                else {
+                    bodyRow.style.backgroundColor = "#9cffed";
+                }
+            }
+
+
+            //when three filters are selected
+            else if (country == "" && city == jsonFlights[item].city && flightNumber == jsonFlights[item].number && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && !flightType[0].checked && !flightType[1].checked) {
+                var bodyRow = document.createElement("tr");
+                const image = document.createElement("img");
+                image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
+                image.style.display = "block";
+                image.style.margin = "0 auto";
+                image.style.width = "25px";
+                image.style.height = "25px";
+                const firstCell = document.createElement("td");
+                firstCell.appendChild(image);
+                bodyRow.appendChild(firstCell);
+                bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
+                    `<td>${schedueTime}</td><td>${actualTime}</td>` +
+                    `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
+                    `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
+                tableBody.appendChild(bodyRow)
+
+                if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#afeeee";
+                else {
+                    bodyRow.style.backgroundColor = "#9cffed";
+                }
+            }
+            else if (country == jsonFlights[item].country && city == jsonFlights[item].city && flightNumber == "" && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && !flightType[0].checked && !flightType[1].checked) {
+                var bodyRow = document.createElement("tr");
+                const image = document.createElement("img");
+                image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
+                image.style.display = "block";
+                image.style.margin = "0 auto";
+                image.style.width = "25px";
+                image.style.height = "25px";
+                const firstCell = document.createElement("td");
+                firstCell.appendChild(image);
+                bodyRow.appendChild(firstCell);
+                bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
+                    `<td>${schedueTime}</td><td>${actualTime}</td>` +
+                    `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
+                    `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
+                tableBody.appendChild(bodyRow)
+
+                if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#afeeee";
+                else {
+                    bodyRow.style.backgroundColor = "#9cffed";
+                }
+            }
+            else if (country == jsonFlights[item].country && city == "" && flightNumber == jsonFlights[item].number && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && !flightType[0].checked && !flightType[1].checked) {
+                var bodyRow = document.createElement("tr");
+                const image = document.createElement("img");
+                image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
+                image.style.display = "block";
+                image.style.margin = "0 auto";
+                image.style.width = "25px";
+                image.style.height = "25px";
+                const firstCell = document.createElement("td");
+                firstCell.appendChild(image);
+                bodyRow.appendChild(firstCell);
+                bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
+                    `<td>${schedueTime}</td><td>${actualTime}</td>` +
+                    `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
+                    `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
+                tableBody.appendChild(bodyRow)
+
+                if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#afeeee";
+                else {
+                    bodyRow.style.backgroundColor = "#9cffed";
+                }
+            }
+            else if (country == jsonFlights[item].country && city == jsonFlights[item].city && flightNumber == jsonFlights[item].number && from == "" && to == "" && !flightType[0].checked && !flightType[1].checked) {
+                var bodyRow = document.createElement("tr");
+                const image = document.createElement("img");
+                image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
+                image.style.display = "block";
+                image.style.margin = "0 auto";
+                image.style.width = "25px";
+                image.style.height = "25px";
+                const firstCell = document.createElement("td");
+                firstCell.appendChild(image);
+                bodyRow.appendChild(firstCell);
+                bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
+                    `<td>${schedueTime}</td><td>${actualTime}</td>` +
+                    `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
+                    `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
+                tableBody.appendChild(bodyRow)
+
+                if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#afeeee";
+                else {
+                    bodyRow.style.backgroundColor = "#9cffed";
+                }
+            }
+            else if (country == jsonFlights[item].country && city == jsonFlights[item].city && flightNumber == "" && from == "" && to == "" && flightType[0].checked && flightType[0].value == jsonFlights[item].type) {
+                var bodyRow = document.createElement("tr");
+                const image = document.createElement("img");
+                image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
+                image.style.display = "block";
+                image.style.margin = "0 auto";
+                image.style.width = "25px";
+                image.style.height = "25px";
+                const firstCell = document.createElement("td");
+                firstCell.appendChild(image);
+                bodyRow.appendChild(firstCell);
+                bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
+                    `<td>${schedueTime}</td><td>${actualTime}</td>` +
+                    `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
+                    `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
+                tableBody.appendChild(bodyRow)
+
+                if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#afeeee";
+                else {
+                    bodyRow.style.backgroundColor = "#9cffed";
+                }
+            }
+            else if (country == jsonFlights[item].country && city == "" && flightNumber == jsonFlights[item].number && from == "" && to == "" && flightType[0].checked && flightType[0].value == jsonFlights[item].type) {
+                var bodyRow = document.createElement("tr");
+                const image = document.createElement("img");
+                image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
+                image.style.display = "block";
+                image.style.margin = "0 auto";
+                image.style.width = "25px";
+                image.style.height = "25px";
+                const firstCell = document.createElement("td");
+                firstCell.appendChild(image);
+                bodyRow.appendChild(firstCell);
+                bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
+                    `<td>${schedueTime}</td><td>${actualTime}</td>` +
+                    `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
+                    `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
+                tableBody.appendChild(bodyRow)
+
+                if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#afeeee";
+                else {
+                    bodyRow.style.backgroundColor = "#9cffed";
+                }
+            }
+            else if (country == jsonFlights[item].country && city == "" && flightNumber == "" && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && flightType[0].checked && flightType[0].value == jsonFlights[item].type) {
+                var bodyRow = document.createElement("tr");
+                const image = document.createElement("img");
+                image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
+                image.style.display = "block";
+                image.style.margin = "0 auto";
+                image.style.width = "25px";
+                image.style.height = "25px";
+                const firstCell = document.createElement("td");
+                firstCell.appendChild(image);
+                bodyRow.appendChild(firstCell);
+                bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
+                    `<td>${schedueTime}</td><td>${actualTime}</td>` +
+                    `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
+                    `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
+                tableBody.appendChild(bodyRow)
+
+                if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#afeeee";
+                else {
+                    bodyRow.style.backgroundColor = "#9cffed";
+                }
+            }
+            else if (country == jsonFlights[item].country && city == "" && flightNumber == "" && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && flightType[1].checked && flightType[1].value == jsonFlights[item].type) {
+                var bodyRow = document.createElement("tr");
+                const image = document.createElement("img");
+                image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
+                image.style.display = "block";
+                image.style.margin = "0 auto";
+                image.style.width = "25px";
+                image.style.height = "25px";
+                const firstCell = document.createElement("td");
+                firstCell.appendChild(image);
+                bodyRow.appendChild(firstCell);
+                bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
+                    `<td>${schedueTime}</td><td>${actualTime}</td>` +
+                    `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
+                    `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
+                tableBody.appendChild(bodyRow)
+
+                if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#afeeee";
+                else {
+                    bodyRow.style.backgroundColor = "#9cffed";
+                }
+            }
+            else if (country == jsonFlights[item].country && city == jsonFlights[item].city && flightNumber == "" && from == "" && to == "" && flightType[0].checked && flightType[0].value == jsonFlights[item].type) {
+                var bodyRow = document.createElement("tr");
+                const image = document.createElement("img");
+                image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
+                image.style.display = "block";
+                image.style.margin = "0 auto";
+                image.style.width = "25px";
+                image.style.height = "25px";
+                const firstCell = document.createElement("td");
+                firstCell.appendChild(image);
+                bodyRow.appendChild(firstCell);
+                bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
+                    `<td>${schedueTime}</td><td>${actualTime}</td>` +
+                    `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
+                    `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
+                tableBody.appendChild(bodyRow)
+
+                if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#afeeee";
+                else {
+                    bodyRow.style.backgroundColor = "#9cffed";
+                }
+            }
+            else if (country == jsonFlights[item].country && city == jsonFlights[item].city && flightNumber == "" && from == "" && to == "" && flightType[1].checked && flightType[1].value == jsonFlights[item].type) {
+                var bodyRow = document.createElement("tr");
+                const image = document.createElement("img");
+                image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
+                image.style.display = "block";
+                image.style.margin = "0 auto";
+                image.style.width = "25px";
+                image.style.height = "25px";
+                const firstCell = document.createElement("td");
+                firstCell.appendChild(image);
+                bodyRow.appendChild(firstCell);
+                bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
+                    `<td>${schedueTime}</td><td>${actualTime}</td>` +
+                    `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
+                    `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
+                tableBody.appendChild(bodyRow)
+
+                if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#afeeee";
+                else {
+                    bodyRow.style.backgroundColor = "#9cffed";
+                }
+            }
+            else if (country == jsonFlights[item].country && city == "" && flightNumber == jsonFlights[item].number && from == "" && to == "" && flightType[0].checked && flightType[0].value == jsonFlights[item].type) {
+                var bodyRow = document.createElement("tr");
+                const image = document.createElement("img");
+                image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
+                image.style.display = "block";
+                image.style.margin = "0 auto";
+                image.style.width = "25px";
+                image.style.height = "25px";
+                const firstCell = document.createElement("td");
+                firstCell.appendChild(image);
+                bodyRow.appendChild(firstCell);
+                bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
+                    `<td>${schedueTime}</td><td>${actualTime}</td>` +
+                    `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
+                    `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
+                tableBody.appendChild(bodyRow)
+
+                if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#afeeee";
+                else {
+                    bodyRow.style.backgroundColor = "#9cffed";
+                }
+            }
+            else if (country == jsonFlights[item].country && city == "" && flightNumber == jsonFlights[item].number && from == "" && to == "" && flightType[1].checked && flightType[1].value == jsonFlights[item].type) {
+                var bodyRow = document.createElement("tr");
+                const image = document.createElement("img");
+                image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
+                image.style.display = "block";
+                image.style.margin = "0 auto";
+                image.style.width = "25px";
+                image.style.height = "25px";
+                const firstCell = document.createElement("td");
+                firstCell.appendChild(image);
+                bodyRow.appendChild(firstCell);
+                bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
+                    `<td>${schedueTime}</td><td>${actualTime}</td>` +
+                    `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
+                    `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
+                tableBody.appendChild(bodyRow)
+
+                if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#afeeee";
+                else {
+                    bodyRow.style.backgroundColor = "#9cffed";
+                }
+            }
+            else if (country == "" && city == jsonFlights[item].city && flightNumber == jsonFlights[item].number && from == "" && to == "" && flightType[0].checked && flightType[0].value == jsonFlights[item].type) {
+                var bodyRow = document.createElement("tr");
+                const image = document.createElement("img");
+                image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
+                image.style.display = "block";
+                image.style.margin = "0 auto";
+                image.style.width = "25px";
+                image.style.height = "25px";
+                const firstCell = document.createElement("td");
+                firstCell.appendChild(image);
+                bodyRow.appendChild(firstCell);
+                bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
+                    `<td>${schedueTime}</td><td>${actualTime}</td>` +
+                    `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
+                    `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
+                tableBody.appendChild(bodyRow)
+
+                if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#afeeee";
+                else {
+                    bodyRow.style.backgroundColor = "#9cffed";
+                }
+            }
+            else if (country == "" && city == jsonFlights[item].city && flightNumber == jsonFlights[item].number && from == "" && to == "" && flightType[1].checked && flightType[1].value == jsonFlights[item].type) {
+                var bodyRow = document.createElement("tr");
+                const image = document.createElement("img");
+                image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
+                image.style.display = "block";
+                image.style.margin = "0 auto";
+                image.style.width = "25px";
+                image.style.height = "25px";
+                const firstCell = document.createElement("td");
+                firstCell.appendChild(image);
+                bodyRow.appendChild(firstCell);
+                bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
+                    `<td>${schedueTime}</td><td>${actualTime}</td>` +
+                    `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
+                    `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
+                tableBody.appendChild(bodyRow)
+
+                if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#afeeee";
+                else {
+                    bodyRow.style.backgroundColor = "#9cffed";
+                }
+            }
+
+
+
+
+
+            //when four filters are selected
+            else if (country == "" && city == jsonFlights[item].city && flightNumber == jsonFlights[item].number && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && flightType[0].checked && flightType[0].value == jsonFlights[item].type) {
+                var bodyRow = document.createElement("tr");
+                const image = document.createElement("img");
+                image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
+                image.style.display = "block";
+                image.style.margin = "0 auto";
+                image.style.width = "25px";
+                image.style.height = "25px";
+                const firstCell = document.createElement("td");
+                firstCell.appendChild(image);
+                bodyRow.appendChild(firstCell);
+                bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
+                    `<td>${schedueTime}</td><td>${actualTime}</td>` +
+                    `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
+                    `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
+                tableBody.appendChild(bodyRow)
+
+                if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#afeeee";
+                else {
+                    bodyRow.style.backgroundColor = "#9cffed";
+                }
+            }
+            else if (country == "" && city == jsonFlights[item].city && flightNumber == jsonFlights[item].number && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && flightType[1].checked && flightType[1].value == jsonFlights[item].type) {
+                var bodyRow = document.createElement("tr");
+                const image = document.createElement("img");
+                image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
+                image.style.display = "block";
+                image.style.margin = "0 auto";
+                image.style.width = "25px";
+                image.style.height = "25px";
+                const firstCell = document.createElement("td");
+                firstCell.appendChild(image);
+                bodyRow.appendChild(firstCell);
+                bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
+                    `<td>${schedueTime}</td><td>${actualTime}</td>` +
+                    `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
+                    `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
+                tableBody.appendChild(bodyRow)
+
+                if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#afeeee";
+                else {
+                    bodyRow.style.backgroundColor = "#9cffed";
+                }
+            }
+            else if (country == jsonFlights[item].country && city == jsonFlights[item].city && flightNumber == "" && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && flightType[0].checked && flightType[0].value == jsonFlights[item].type) {
+                var bodyRow = document.createElement("tr");
+                const image = document.createElement("img");
+                image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
+                image.style.display = "block";
+                image.style.margin = "0 auto";
+                image.style.width = "25px";
+                image.style.height = "25px";
+                const firstCell = document.createElement("td");
+                firstCell.appendChild(image);
+                bodyRow.appendChild(firstCell);
+                bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
+                    `<td>${schedueTime}</td><td>${actualTime}</td>` +
+                    `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
+                    `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
+                tableBody.appendChild(bodyRow)
+
+                if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#afeeee";
+                else {
+                    bodyRow.style.backgroundColor = "#9cffed";
+                }
+            }
+            else if (country == jsonFlights[item].country && city == jsonFlights[item].city && flightNumber == "" && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && flightType[1].checked && flightType[1].value == jsonFlights[item].type) {
+                var bodyRow = document.createElement("tr");
+                const image = document.createElement("img");
+                image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
+                image.style.display = "block";
+                image.style.margin = "0 auto";
+                image.style.width = "25px";
+                image.style.height = "25px";
+                const firstCell = document.createElement("td");
+                firstCell.appendChild(image);
+                bodyRow.appendChild(firstCell);
+                bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
+                    `<td>${schedueTime}</td><td>${actualTime}</td>` +
+                    `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
+                    `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
+                tableBody.appendChild(bodyRow)
+
+                if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#afeeee";
+                else {
+                    bodyRow.style.backgroundColor = "#9cffed";
+                }
+
+            }
+            else if (country == jsonFlights[item].country && city == jsonFlights[item].city && flightNumber == jsonFlights[item].number && from == "" && to == "" && flightType[0].checked && flightType[0].value == jsonFlights[item].type) {
+                var bodyRow = document.createElement("tr");
+                const image = document.createElement("img");
+                image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
+                image.style.display = "block";
+                image.style.margin = "0 auto";
+                image.style.width = "25px";
+                image.style.height = "25px";
+                const firstCell = document.createElement("td");
+                firstCell.appendChild(image);
+                bodyRow.appendChild(firstCell);
+                bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
+                    `<td>${schedueTime}</td><td>${actualTime}</td>` +
+                    `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
+                    `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
+                tableBody.appendChild(bodyRow)
+
+                if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#afeeee";
+                else {
+                    bodyRow.style.backgroundColor = "#9cffed";
+                }
+            }
+            else if (country == jsonFlights[item].country && city == jsonFlights[item].city && flightNumber == jsonFlights[item].number && from == "" && to == "" && flightType[1].checked && flightType[1].value == jsonFlights[item].type) {
+                var bodyRow = document.createElement("tr");
+                const image = document.createElement("img");
+                image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
+                image.style.display = "block";
+                image.style.margin = "0 auto";
+                image.style.width = "25px";
+                image.style.height = "25px";
+                const firstCell = document.createElement("td");
+                firstCell.appendChild(image);
+                bodyRow.appendChild(firstCell);
+                bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
+                    `<td>${schedueTime}</td><td>${actualTime}</td>` +
+                    `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
+                    `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
+                tableBody.appendChild(bodyRow)
+
+                if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#afeeee";
+                else {
+                    bodyRow.style.backgroundColor = "#9cffed";
+                }
+            }
+            else if (country == jsonFlights[item].country && city == jsonFlights[item].city && flightNumber == jsonFlights[item].number && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && !flightType[0].checked && !flightType[1].checked) {
+                var bodyRow = document.createElement("tr");
+                const image = document.createElement("img");
+                image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
+                image.style.display = "block";
+                image.style.margin = "0 auto";
+                image.style.width = "25px";
+                image.style.height = "25px";
+                const firstCell = document.createElement("td");
+                firstCell.appendChild(image);
+                bodyRow.appendChild(firstCell);
+                bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
+                    `<td>${schedueTime}</td><td>${actualTime}</td>` +
+                    `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
+                    `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
+                tableBody.appendChild(bodyRow)
+
+                if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#afeeee";
+                else {
+                    bodyRow.style.backgroundColor = "#9cffed";
+                }
+            }
+
+            //when five filters are selected
+            else if (country == jsonFlights[item].country && city == jsonFlights[item].city && flightNumber == jsonFlights[item].number && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && flightType[0].checked && flightType[0].value == jsonFlights[item].type) {
+                var bodyRow = document.createElement("tr");
+                const image = document.createElement("img");
+                image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
+                image.style.display = "block";
+                image.style.margin = "0 auto";
+                image.style.width = "25px";
+                image.style.height = "25px";
+                const firstCell = document.createElement("td");
+                firstCell.appendChild(image);
+                bodyRow.appendChild(firstCell);
+                bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
+                    `<td>${schedueTime}</td><td>${actualTime}</td>` +
+                    `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
+                    `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
+                tableBody.appendChild(bodyRow)
+
+                if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#afeeee";
+                else {
+                    bodyRow.style.backgroundColor = "#9cffed";
+                }
+            }
+            else if (country == jsonFlights[item].country && city == jsonFlights[item].city && flightNumber == jsonFlights[item].number && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && flightType[1].checked && flightType[1].value == jsonFlights[item].type) {
+                var bodyRow = document.createElement("tr");
+                const image = document.createElement("img");
+                image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
+                image.style.display = "block";
+                image.style.margin = "0 auto";
+                image.style.width = "25px";
+                image.style.height = "25px";
+                const firstCell = document.createElement("td");
+                firstCell.appendChild(image);
+                bodyRow.appendChild(firstCell);
+                bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
+                    `<td>${schedueTime}</td><td>${actualTime}</td>` +
+                    `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
+                    `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
+                tableBody.appendChild(bodyRow)
+
+                if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#afeeee";
+                else {
+                    bodyRow.style.backgroundColor = "#9cffed";
+                }
+            }
+            else {
+                alert("No flight found");
+                break;
+            }
 
         }
+
     }
+
 }
 
 

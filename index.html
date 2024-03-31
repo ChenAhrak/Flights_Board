@@ -27,8 +27,32 @@
         <input type="date" id="to" placeholder="עד תאריך"><br>
         <button onclick=filterTable()>חיפוש</button>
     </div>
-    <div id="statistic-info"><h2 onclick="showStats()">מידע סטטיסטי</h2></div>
-    <div id="flight-info"></div>
+
+    <div class="statistic-info"><span onclick="showStats()">מידע סטטיסטי</span></div>
+
+    <div class="flight-info">
+        <table id="full-info">
+            <thead id="info-header">
+                <tr>
+                    <td>סוג טיסה</td>
+                    <td>שם מקוצר של חברת התעופה</td>
+                    <td>מספר הטיסה</td>
+                    <td>שם מלא של חברת התעופה</td>
+                    <td>זמן מתוכנן</td>
+                    <td>זמן בפועל</td>
+                    <td>קוד נמל תעופה ביעד</td>
+                    <td>שם שדה התעופה ביעד / במקור</td>
+                    <td>שם העיר ביעד / במקור</td>
+                    <td>ארץ היעד / המקור</td>
+                    <td>טרמינל</td>
+                    <td>דלפק צ'ק אין</td>
+                    <td>איזור הדלפק</td>
+                    <td>סטטוס</td>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
     <div id="tableContainer">
         <table id="flights-table">
             <thead id="table-header">

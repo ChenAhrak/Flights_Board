@@ -12,11 +12,16 @@ h1 {
     text-align: center;
 }
 
+span {
+    font-size: 30px;
+    font-weight: bold;
+}
 
 table {
     width: 100%;
     border-collapse: collapse;
     border: solid 1px black;
+    padding-top: 20px;
 }
 
 thead{
@@ -63,6 +68,22 @@ tr{
     top: 0px;
 }
 
-#statistic-info h2:hover {
+.statistic-info {
+    text-align:center;
+    margin-bottom: 20px;
+}
+
+.statistic-info span:hover {
     color: cornflowerblue; 
+}
+
+.flight-info {
+    margin-bottom: 50px;
+
+}
+
+#full-info {
+    width: 100%;
+    border-collapse: collapse;
+    border: solid 2px black;
 }

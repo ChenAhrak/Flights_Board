@@ -1,7 +1,9 @@
 ﻿
 
 const searchContainer = document.getElementsByClassName("searchContainer"); // redundant?
+const perFlightInfo = document.getElementById("full-info");
 
+perFlightInfo.style.visibility = "hidden";
 
 
 // Extract unique country values from jsonFlights
@@ -61,6 +63,7 @@ function populateTable() {
         const firstCell = document.createElement("td");
         firstCell.appendChild(image);
         bodyRow.appendChild(firstCell);
+        bodyRow.addEventListener("onclick", showFullInfo);
         bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
             `<td>${schedueTime}</td><td>${actualTime}</td>` +
             `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
@@ -79,8 +82,10 @@ function populateTable() {
             bodyRow.style.backgroundColor = "#9cffed";
         }
     }
+    tableBody.id = "table-body";
     table.appendChild(tableBody);
     tableContainer.appendChild(table);
+    tableContainer.style.textAlign = "center";
 }
 populateTable();
 
@@ -905,14 +910,14 @@ function styleImage(imageElement) {
     imageElement.style.height = "25px";
 }
 
-
 const tableRows = document.querySelectorAll("tr");
 const lightBlue = "#89cff0";
 
-//function changeTextColor(textElement) {
-//    textElement.style.color = "red";
-//}
 
+function showFullInfo() {
+    perFlightInfo.style.visibility = "visible";
+    console.log("true");
+}
 
 function changeRowColor(rows, color) {
     const rowColor = rows.style.backgroundColor;
@@ -923,5 +928,7 @@ function changeRowColor(rows, color) {
         this.style.backgroundColor = rowColor;
     });
 }
+
+tableRows.forEach((row) => addEventListener("click", showFullInfo));
 
 tableRows.forEach((row) => changeRowColor(row, lightBlue));

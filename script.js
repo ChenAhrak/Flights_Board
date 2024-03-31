@@ -916,7 +916,6 @@ const lightBlue = "#89cff0";
 
 function showFullInfo() {
     perFlightInfo.style.visibility = "visible";
-    console.log("true");
 }
 
 function changeRowColor(rows, color) {
@@ -929,6 +928,7 @@ function changeRowColor(rows, color) {
     });
 }
 
-tableRows.forEach((row) => addEventListener("click", showFullInfo));
+const mainTable = document.getElementById("table-body").querySelectorAll("tr");
+mainTable.forEach((row) => row.addEventListener("click", showFullInfo));
 
 tableRows.forEach((row) => changeRowColor(row, lightBlue));

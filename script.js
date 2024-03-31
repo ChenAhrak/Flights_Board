@@ -82,7 +82,7 @@ function populateTable() {
             bodyRow.style.backgroundColor = "#9cffed";
         }
     }
-    tableBody.id = "table-body";
+    //tableBody.id = "table-body";
     table.appendChild(tableBody);
     tableContainer.appendChild(table);
     tableContainer.style.textAlign = "center";
@@ -98,7 +98,7 @@ function filterTable() {
     const to = document.getElementById("to").value;
     console.log(country, city, from, to, flightType[0].checked, flightType[1].checked);
     if (country == "" && city == "" && flightNumber == "" && from == "" && to == "" && !flightType[0].checked && !flightType[1].checked) {
-        alert("Please select a filter");
+        alert("בחר באחת או יותר מאפשרויות החיפוש");
     }
     else {
         tableBody.innerHTML = "";
@@ -900,6 +900,8 @@ function filterTable() {
         }
     }
     const tableRows = document.querySelectorAll("tr");
+    const mainTable = document.getElementById("table-body").querySelectorAll("tr");
+    mainTable.forEach((row) => row.addEventListener("click", showFullInfo));
     tableRows.forEach((row) => changeRowColor(row, lightBlue));
 }
 
@@ -914,7 +916,7 @@ const tableRows = document.querySelectorAll("tr");
 const lightBlue = "#89cff0";
 
 
-function showFullInfo() {
+function showFullInfo() { //making a div with flight details visible when selecting a flight (work in progress)
     perFlightInfo.style.visibility = "visible";
 }
 

@@ -6,17 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <script src="flights.js"></script>
-
     <title>Flights</title>
 </head>
 
 <body id="container" dir="rtl">
-    <h1>ברוכים הבאים ללוח הטיסות הכי גדול במדינה</h1>
-    <div id="searchContainer">
+    <div class="header">
+        <img class="headImg" src="passanger-plane.jpg" alt="plane image" />
+        <h1>ברוכים הבאים ללוח הטיסות הכי גדול במדינה</h1>
+    </div>
 
-        <input type="radio" name="flight-type" id="departures" value="D">
+    <div class="searchContainer">
+        <input type="checkbox" name="flight-type" id="departures" value="D">
         <label for="departures">המראות</label><br>
-        <input type="radio" name="flight-type" id="arrivals" value="A">
+        <input type="checkbox" name="flight-type" id="arrivals" value="A">
         <label for="arrivals">נחיתות</label><br>
         <input type="text" id="flight-number" placeholder="מספר טיסה"><br>
         <select name="country" id="country"></select><br>
@@ -24,8 +26,9 @@
         <input type="date" id="from" placeholder="מתאריך"><br>
         <input type="date" id="to" placeholder="עד תאריך"><br>
         <button onclick=filterTable()>חיפוש</button>
-
     </div>
+    <div id="statistic-info"><h2 onclick="showStats()">מידע סטטיסטי</h2></div>
+    <div id="flight-info"></div>
     <div id="tableContainer">
         <table id="flights-table">
             <thead id="table-header">

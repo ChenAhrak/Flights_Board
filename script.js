@@ -1,11 +1,17 @@
 ﻿
 
-const searchContainer = document.getElementById("searchContainer");
+const searchContainer = document.getElementsByClassName("searchContainer"); // redundant?
+
 
 
 // Extract unique country values from jsonFlights
 const uniqueCountries = new Set(" "); // Initialize with an empty string to add an empty option
 const countries = document.getElementById("country");
+
+const departuresCheck = document.getElementById("departures");
+departuresCheck.checked = true;
+const arrivalsCheck = document.getElementById("arrivals");
+arrivalsCheck.checked = true;
 
 for (let item in jsonFlights) {
     if (jsonFlights[item].country) {
@@ -51,10 +57,7 @@ function populateTable() {
         var bodyRow = document.createElement("tr");
         const image = document.createElement("img");
         image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
-        image.style.display = "block";
-        image.style.margin = "0 auto";
-        image.style.width = "25px";
-        image.style.height = "25px";
+        styleImage(image);
         const firstCell = document.createElement("td");
         firstCell.appendChild(image);
         bodyRow.appendChild(firstCell);
@@ -64,8 +67,6 @@ function populateTable() {
             `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
         tableBody.appendChild(bodyRow)
         if (jsonFlights[item].actualTime.toString() != jsonFlights[item].schedueTime.toString()) {
-            //bodyRow.style.fontWeight = "bold";
-            //bodyRow.style.border = "2px dotted black";
             var fourthChild = bodyRow.children[3];
             var fifthChild = bodyRow.children[4];
             fourthChild.style.color = "red";
@@ -101,14 +102,11 @@ function filterTable() {
             const actualTime = new Date(jsonFlights[item].actualTime).toLocaleDateString([], { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false }).trim();
 
             // when all filters are empty
-            if (country == jsonFlights[item].country && city == "" && flightNumber == "" && from == "" && to == "" && !flightType[0].checked && !flightType[1].checked) {
+            if (country == jsonFlights[item].country && city == "" && flightNumber == "" && from == "" && to == "" && !flightType[0].checked && !flightType[1].checked) { // why county has value
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
-                image.style.display = "block";
-                image.style.margin = "0 auto";
-                image.style.width = "25px";
-                image.style.height = "25px";
+                styleImage(image);
                 const firstCell = document.createElement("td");
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
@@ -122,7 +120,6 @@ function filterTable() {
                 else {
                     bodyRow.style.backgroundColor = "#9cffed";
                 }
-
             }
 
             //when only one filter is selected
@@ -130,10 +127,7 @@ function filterTable() {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
-                image.style.display = "block";
-                image.style.margin = "0 auto";
-                image.style.width = "25px";
-                image.style.height = "25px";
+                styleImage(image);
                 const firstCell = document.createElement("td");
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
@@ -152,10 +146,7 @@ function filterTable() {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
-                image.style.display = "block";
-                image.style.margin = "0 auto";
-                image.style.width = "25px";
-                image.style.height = "25px";
+                styleImage(image);
                 const firstCell = document.createElement("td");
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
@@ -174,10 +165,7 @@ function filterTable() {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
-                image.style.display = "block";
-                image.style.margin = "0 auto";
-                image.style.width = "25px";
-                image.style.height = "25px";
+                styleImage(image);
                 const firstCell = document.createElement("td");
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
@@ -196,10 +184,7 @@ function filterTable() {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
-                image.style.display = "block";
-                image.style.margin = "0 auto";
-                image.style.width = "25px";
-                image.style.height = "25px";
+                styleImage(image);
                 const firstCell = document.createElement("td");
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
@@ -219,10 +204,7 @@ function filterTable() {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
-                image.style.display = "block";
-                image.style.margin = "0 auto";
-                image.style.width = "25px";
-                image.style.height = "25px";
+                styleImage(image);
                 const firstCell = document.createElement("td");
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
@@ -243,10 +225,7 @@ function filterTable() {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
-                image.style.display = "block";
-                image.style.margin = "0 auto";
-                image.style.width = "25px";
-                image.style.height = "25px";
+                styleImage(image);
                 const firstCell = document.createElement("td");
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
@@ -265,10 +244,7 @@ function filterTable() {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
-                image.style.display = "block";
-                image.style.margin = "0 auto";
-                image.style.width = "25px";
-                image.style.height = "25px";
+                styleImage(image);
                 const firstCell = document.createElement("td");
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
@@ -287,10 +263,7 @@ function filterTable() {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
-                image.style.display = "block";
-                image.style.margin = "0 auto";
-                image.style.width = "25px";
-                image.style.height = "25px";
+                styleImage(image);
                 const firstCell = document.createElement("td");
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
@@ -309,10 +282,7 @@ function filterTable() {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
-                image.style.display = "block";
-                image.style.margin = "0 auto";
-                image.style.width = "25px";
-                image.style.height = "25px";
+                styleImage(image);
                 const firstCell = document.createElement("td");
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
@@ -331,10 +301,7 @@ function filterTable() {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
-                image.style.display = "block";
-                image.style.margin = "0 auto";
-                image.style.width = "25px";
-                image.style.height = "25px";
+                styleImage(image);
                 const firstCell = document.createElement("td");
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
@@ -353,10 +320,7 @@ function filterTable() {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
-                image.style.display = "block";
-                image.style.margin = "0 auto";
-                image.style.width = "25px";
-                image.style.height = "25px";
+                styleImage(image);
                 const firstCell = document.createElement("td");
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
@@ -375,10 +339,7 @@ function filterTable() {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
-                image.style.display = "block";
-                image.style.margin = "0 auto";
-                image.style.width = "25px";
-                image.style.height = "25px";
+                styleImage(image);
                 const firstCell = document.createElement("td");
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
@@ -397,10 +358,7 @@ function filterTable() {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
-                image.style.display = "block";
-                image.style.margin = "0 auto";
-                image.style.width = "25px";
-                image.style.height = "25px";
+                styleImage(image);
                 const firstCell = document.createElement("td");
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
@@ -419,10 +377,7 @@ function filterTable() {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
-                image.style.display = "block";
-                image.style.margin = "0 auto";
-                image.style.width = "25px";
-                image.style.height = "25px";
+                styleImage(image);
                 const firstCell = document.createElement("td");
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
@@ -441,10 +396,7 @@ function filterTable() {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
-                image.style.display = "block";
-                image.style.margin = "0 auto";
-                image.style.width = "25px";
-                image.style.height = "25px";
+                styleImage(image);
                 const firstCell = document.createElement("td");
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
@@ -463,10 +415,7 @@ function filterTable() {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
-                image.style.display = "block";
-                image.style.margin = "0 auto";
-                image.style.width = "25px";
-                image.style.height = "25px";
+                styleImage(image);
                 const firstCell = document.createElement("td");
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
@@ -485,10 +434,7 @@ function filterTable() {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
-                image.style.display = "block";
-                image.style.margin = "0 auto";
-                image.style.width = "25px";
-                image.style.height = "25px";
+                styleImage(image);
                 const firstCell = document.createElement("td");
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
@@ -504,16 +450,12 @@ function filterTable() {
                 }
             }
 
-
             //when three filters are selected
             else if (country == "" && city == jsonFlights[item].city && flightNumber == jsonFlights[item].number && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && !flightType[0].checked && !flightType[1].checked) {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
-                image.style.display = "block";
-                image.style.margin = "0 auto";
-                image.style.width = "25px";
-                image.style.height = "25px";
+                styleImage(image);
                 const firstCell = document.createElement("td");
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
@@ -532,10 +474,7 @@ function filterTable() {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
-                image.style.display = "block";
-                image.style.margin = "0 auto";
-                image.style.width = "25px";
-                image.style.height = "25px";
+                styleImage(image);
                 const firstCell = document.createElement("td");
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
@@ -554,10 +493,7 @@ function filterTable() {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
-                image.style.display = "block";
-                image.style.margin = "0 auto";
-                image.style.width = "25px";
-                image.style.height = "25px";
+                styleImage(image);
                 const firstCell = document.createElement("td");
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
@@ -576,10 +512,7 @@ function filterTable() {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
-                image.style.display = "block";
-                image.style.margin = "0 auto";
-                image.style.width = "25px";
-                image.style.height = "25px";
+                styleImage(image);
                 const firstCell = document.createElement("td");
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
@@ -598,10 +531,7 @@ function filterTable() {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
-                image.style.display = "block";
-                image.style.margin = "0 auto";
-                image.style.width = "25px";
-                image.style.height = "25px";
+                styleImage(image);
                 const firstCell = document.createElement("td");
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
@@ -620,10 +550,7 @@ function filterTable() {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
-                image.style.display = "block";
-                image.style.margin = "0 auto";
-                image.style.width = "25px";
-                image.style.height = "25px";
+                styleImage(image);
                 const firstCell = document.createElement("td");
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
@@ -642,10 +569,7 @@ function filterTable() {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
-                image.style.display = "block";
-                image.style.margin = "0 auto";
-                image.style.width = "25px";
-                image.style.height = "25px";
+                styleImage(image);
                 const firstCell = document.createElement("td");
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
@@ -664,10 +588,7 @@ function filterTable() {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
-                image.style.display = "block";
-                image.style.margin = "0 auto";
-                image.style.width = "25px";
-                image.style.height = "25px";
+                styleImage(image);
                 const firstCell = document.createElement("td");
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
@@ -686,10 +607,7 @@ function filterTable() {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
-                image.style.display = "block";
-                image.style.margin = "0 auto";
-                image.style.width = "25px";
-                image.style.height = "25px";
+                styleImage(image);
                 const firstCell = document.createElement("td");
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
@@ -708,10 +626,7 @@ function filterTable() {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
-                image.style.display = "block";
-                image.style.margin = "0 auto";
-                image.style.width = "25px";
-                image.style.height = "25px";
+                styleImage(image);
                 const firstCell = document.createElement("td");
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
@@ -730,10 +645,7 @@ function filterTable() {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
-                image.style.display = "block";
-                image.style.margin = "0 auto";
-                image.style.width = "25px";
-                image.style.height = "25px";
+                styleImage(image);
                 const firstCell = document.createElement("td");
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
@@ -752,10 +664,7 @@ function filterTable() {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
-                image.style.display = "block";
-                image.style.margin = "0 auto";
-                image.style.width = "25px";
-                image.style.height = "25px";
+                styleImage(image);
                 const firstCell = document.createElement("td");
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
@@ -774,10 +683,7 @@ function filterTable() {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
-                image.style.display = "block";
-                image.style.margin = "0 auto";
-                image.style.width = "25px";
-                image.style.height = "25px";
+                styleImage(image);
                 const firstCell = document.createElement("td");
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
@@ -796,10 +702,7 @@ function filterTable() {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
-                image.style.display = "block";
-                image.style.margin = "0 auto";
-                image.style.width = "25px";
-                image.style.height = "25px";
+                styleImage(image);
                 const firstCell = document.createElement("td");
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
@@ -814,20 +717,12 @@ function filterTable() {
                     bodyRow.style.backgroundColor = "#9cffed";
                 }
             }
-
-
-
-
-
             //when four filters are selected
             else if (country == "" && city == jsonFlights[item].city && flightNumber == jsonFlights[item].number && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && flightType[0].checked && flightType[0].value == jsonFlights[item].type) {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
-                image.style.display = "block";
-                image.style.margin = "0 auto";
-                image.style.width = "25px";
-                image.style.height = "25px";
+                styleImage(image);
                 const firstCell = document.createElement("td");
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
@@ -846,10 +741,7 @@ function filterTable() {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
-                image.style.display = "block";
-                image.style.margin = "0 auto";
-                image.style.width = "25px";
-                image.style.height = "25px";
+                styleImage(image);
                 const firstCell = document.createElement("td");
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
@@ -868,10 +760,7 @@ function filterTable() {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
-                image.style.display = "block";
-                image.style.margin = "0 auto";
-                image.style.width = "25px";
-                image.style.height = "25px";
+                styleImage(image);
                 const firstCell = document.createElement("td");
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
@@ -890,10 +779,7 @@ function filterTable() {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
-                image.style.display = "block";
-                image.style.margin = "0 auto";
-                image.style.width = "25px";
-                image.style.height = "25px";
+                styleImage(image);
                 const firstCell = document.createElement("td");
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
@@ -913,10 +799,7 @@ function filterTable() {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
-                image.style.display = "block";
-                image.style.margin = "0 auto";
-                image.style.width = "25px";
-                image.style.height = "25px";
+                styleImage(image);
                 const firstCell = document.createElement("td");
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
@@ -935,10 +818,7 @@ function filterTable() {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
-                image.style.display = "block";
-                image.style.margin = "0 auto";
-                image.style.width = "25px";
-                image.style.height = "25px";
+                styleImage(image);
                 const firstCell = document.createElement("td");
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
@@ -957,10 +837,7 @@ function filterTable() {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
-                image.style.display = "block";
-                image.style.margin = "0 auto";
-                image.style.width = "25px";
-                image.style.height = "25px";
+                styleImage(image);
                 const firstCell = document.createElement("td");
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
@@ -981,10 +858,7 @@ function filterTable() {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
-                image.style.display = "block";
-                image.style.margin = "0 auto";
-                image.style.width = "25px";
-                image.style.height = "25px";
+                styleImage(image);
                 const firstCell = document.createElement("td");
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
@@ -1003,10 +877,7 @@ function filterTable() {
                 var bodyRow = document.createElement("tr");
                 const image = document.createElement("img");
                 image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
-                image.style.display = "block";
-                image.style.margin = "0 auto";
-                image.style.width = "25px";
-                image.style.height = "25px";
+                styleImage(image);
                 const firstCell = document.createElement("td");
                 firstCell.appendChild(image);
                 bodyRow.appendChild(firstCell);
@@ -1021,20 +892,27 @@ function filterTable() {
                     bodyRow.style.backgroundColor = "#9cffed";
                 }
             }
-            else {
-                alert("No flight found");
-                break;
-            }
-
         }
-
     }
+    const tableRows = document.querySelectorAll("tr");
+    tableRows.forEach((row) => changeRowColor(row, lightBlue));
+}
 
+function styleImage(imageElement) {
+    imageElement.style.display = "block";
+    imageElement.style.margin = "0 auto";
+    imageElement.style.width = "25px";
+    imageElement.style.height = "25px";
 }
 
 
 const tableRows = document.querySelectorAll("tr");
 const lightBlue = "#89cff0";
+
+//function changeTextColor(textElement) {
+//    textElement.style.color = "red";
+//}
+
 
 function changeRowColor(rows, color) {
     const rowColor = rows.style.backgroundColor;

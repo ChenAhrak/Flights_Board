@@ -30,10 +30,39 @@ td {
     padding: 5px;
 }
 
+tr{
+    background-color:cornflowerblue;
+}
+
 .searchContainer {
-    margin: 100px auto;
-    padding: 20px;
+    margin: 20px auto; 
+    padding-bottom: 50px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 30px;
+    height: 50%;
+    width: 1024px;
+}
+
+.headImg {
+    height: 100%;
+    width: 100%;
+}
+
+.header > h1 {
+    text-align: center;
+    padding-top: 20px;
+    position: absolute;
+    top: 0px;
+}
+
+#statistic-info h2:hover {
+    color: cornflowerblue; 
 }

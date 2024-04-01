@@ -121,6 +121,10 @@ function populateTable() {
 }
 populateTable();
 
+function tableFilterDraft() {
+
+}
+
 
 // Filter the table based on the selected filters
 function filterTable() {
@@ -364,13 +368,19 @@ function showFullInfo(event) {
 
     if (flight) {
         const fullInfoTable = document.getElementById("full-info");
-        const tbody = document.createElement("tbody");
+        //const tbody = document.getElementById("info-body");
 
+        var tbody = document.getElementById("info-body");
+        tbody.appendChild(document.createElement("tr"));
+        const image = document.createElement("img");
+        image.src = flight.type === "A" ? "arrival.png" : "departure.png";
+        styleImage(image);
+        const firstCell = document.createElement("td");
+        firstCell.appendChild(image);
+        tbody.appendChild(firstCell);
 
         // Create a new row for the popup
-        const newRow = document.createElement("tr");
-        newRow.innerHTML = `
-            <td>${flight.type}</td>
+        tbody.innerHTML += `
             <td>${flight.operatorShort}</td>
             <td>${flight.number}</td>
             <td>${flight.operatorLong}</td>
@@ -386,15 +396,11 @@ function showFullInfo(event) {
             <td>${flight.status}</td>
         `;
 
-        tbody.appendChild(newRow);
-        flightInfo.appendChild(tbody);
+        //tbody.appendChild(newRow);
+        fullInfoTable.appendChild(tbody);
 
         // Show the popup
-
         flightInfo.style.display = "block";
-
-
-
     }
 }
 

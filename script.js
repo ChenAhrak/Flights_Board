@@ -120,6 +120,12 @@ function filterTable() {
     const to = document.getElementById("to").value;
     console.log(country, city, from, to, flightType[0].checked, flightType[1].checked);
 
+    // Remove the no match container if it exists
+    if (document.querySelector(".no-match-container")) {
+        document.querySelector(".no-match-container").remove();
+        table.style.display = "block";
+    }
+
     // when all filters are empty
     if (country == "" && city == "" && flightNumber == "" && from == "" && to == "" && !flightType[0].checked && !flightType[1].checked) {
         alert("בחר באחת או יותר מאפשרויות החיפוש");
@@ -303,6 +309,25 @@ function filterTable() {
             }
             else if (country == jsonFlights[item].country && city == jsonFlights[item].city && flightNumber == jsonFlights[item].number && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && flightType[1].checked && flightType[1].value == jsonFlights[item].type) {
                 generateTable(item, schedueTime, actualTime);
+
+            }
+
+            //when no match is found
+            else if (item == jsonFlights.length - 1 && tableBody.innerHTML == "") {
+                table.style.display = "none";
+                console.log("No match");
+                const noMatchDiv = document.createElement("div");
+                const noMatchImg = document.createElement("img");
+                const noMatch = document.createElement("h1");
+                noMatchDiv.className = "no-match-container";
+                noMatchImg.src = "nomatch.png";
+                noMatchImg.style.width = "100px";
+                noMatchImg.style.height = "100px";
+                noMatch.textContent = "לא נמצאו תוצאות התואמות לחיפוש שלך";
+                noMatchDiv.appendChild(noMatchImg);
+                noMatchDiv.appendChild(noMatch);
+                tableContainer.appendChild(noMatchDiv);
+                break;
 
             }
         }

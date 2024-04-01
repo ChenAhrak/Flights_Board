@@ -76,10 +76,15 @@ function populateTable() {
         const firstCell = document.createElement("td");
         firstCell.appendChild(image);
         bodyRow.appendChild(firstCell);
-        bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
-            `<td>${schedueTime}</td><td>${actualTime}</td>` +
-            `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
-            `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
+        bodyRow.innerHTML += `
+                <td>${jsonFlights[item].number}</td>
+                <td>${jsonFlights[item].operatorLong}</td>
+                <td>${schedueTime}</td><td>${actualTime}</td>
+                <td>${jsonFlights[item].airport}</td>
+                <td>${jsonFlights[item].city}</td>
+                <td>${jsonFlights[item].country}</td>
+                <td>${jsonFlights[item].terminal}</td>
+                <td>${jsonFlights[item].status}</td>`;
         tableBody.appendChild(bodyRow)
         if (jsonFlights[item].actualTime.toString() != jsonFlights[item].schedueTime.toString()) {
             var fourthChild = bodyRow.children[3];
@@ -93,11 +98,7 @@ function populateTable() {
         else {
             bodyRow.style.backgroundColor = "#9cffed";
         }
-
     }
-    console.log(actualTime);
-    console.log(typeof (actualTime));
-    console.log(schedueTime);
     table.appendChild(tableBody);
     tableContainer.appendChild(table);
     tableContainer.style.textAlign = "center";
@@ -320,12 +321,25 @@ function generateTable(item, schedueTime, actualTime) {
     const firstCell = document.createElement("td");
     firstCell.appendChild(image);
     bodyRow.appendChild(firstCell);
-    bodyRow.innerHTML += `<td>${jsonFlights[item].number}</td><td>${jsonFlights[item].operatorLong}</td>` +
-        `<td>${schedueTime}</td><td>${actualTime}</td>` +
-        `<td>${jsonFlights[item].airport}</td><td>${jsonFlights[item].city}</td>` +
-        `<td>${jsonFlights[item].country}</td><td>${jsonFlights[item].terminal}</td><td>${jsonFlights[item].status}</td>`;
+    bodyRow.innerHTML += `
+            <td>${jsonFlights[item].number}</td>
+            <td>${jsonFlights[item].operatorLong}</td>
+            <td>${fixTime(schedueTime)}</td>
+            <td>${fixTime(actualTime)}</td>
+            <td>${jsonFlights[item].airport}</td>
+            <td>${jsonFlights[item].city}</td>
+            <td>${jsonFlights[item].country}</td>
+            <td>${jsonFlights[item].terminal}</td>
+            <td>${jsonFlights[item].status}</td>`;
     tableBody.appendChild(bodyRow)
-
+    if (fixTime(schedueTime) != fixTime(actualTime)) {
+        var fourthChild = bodyRow.children[3];
+        var fifthChild = bodyRow.children[4];
+        fourthChild.style.color = "red";
+        fourthChild.style.fontWeight = "bold";
+        fifthChild.style.color = "red";
+        fifthChild.style.fontWeight = "bold";
+    }
     if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#afeeee";
     else {
         bodyRow.style.backgroundColor = "#9cffed";
@@ -338,7 +352,6 @@ function styleImage(imageElement) {
     imageElement.style.width = "25px";
     imageElement.style.height = "25px";
 }
-
 
 
 

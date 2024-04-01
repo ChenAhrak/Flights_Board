@@ -105,11 +105,29 @@ function populateTable() {
 }
 populateTable();
 
-function tableFilterDraft() { // Going to test a difference simpler implementation
+function tableFilterDraft() { // Going to test a difference simpler implementation - still work in progress!
+    const flightType = document.getElementsByName("flight-type");
+    const flightNumber = document.getElementById("flight-number").value.trim();
+    const country = document.getElementById("country").value.trim();
+    const city = document.getElementById("city").value.trim();
+    const from = document.getElementById("from").value;
+    const to = document.getElementById("to").value;
 
+
+    for (item in jsonFlights) {
+        //flightNumber == "" ? flightNumber = jsonFlights[item].number : flightNumber;
+        //country == "" ? country = jsonFlights[item].country : country;
+        //city == "" ? city = jsonFlights[item].city : city;
+        //from == "" ? from = jsonFlights[item].schedueTime : from;
+        //to == "" ? to = jsonFlights[item].schedueTime : to;
+        if (flightNumber == jsonFlights[item].number && country == jsonFlights[item].country) { }
+    }
+
+
+    console.log(flightType);// checked value
 }
 
-
+tableFilterDraft();
 // Filter the table based on the selected filters
 function filterTable() {
     const flightType = document.getElementsByName("flight-type");
@@ -137,7 +155,7 @@ function filterTable() {
             const actualTime = new Date(jsonFlights[item].actualTime).toLocaleDateString([], { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false }).trim();
 
             //when only one filter is selected
-            if (country == jsonFlights[item].country && city == "" && flightNumber == "" && from == "" && to == "" && !flightType[0].checked && !flightType[1].checked) { // why county has value
+            if (country == jsonFlights[item].country && city == "" && flightNumber == "" && from == "" && to == "" && !flightType[0].checked && !flightType[1].checked) {
                 generateTable(item, schedueTime, actualTime);
             }
 
@@ -395,6 +413,8 @@ function showFullInfo(event) {
         actualTime = fixTime(actualTime);
         if (jsonFlights[item].number == flightNumber && schedueTime === timeScheduled && actualTime === timeActual) {
             var flight = jsonFlights[item];
+            flight.schedueTime = schedueTime;
+            flight.actualTime = actualTime;
             break;
         }
     }
@@ -440,8 +460,6 @@ document.getElementById("close-button").addEventListener("click", function () {
 
 const mainTable = document.getElementById("flights-table").querySelectorAll("tr");
 mainTable.forEach(row => row.addEventListener("click", showFullInfo));
-
-
 
 // Function to change the background color of a row when the mouse hovers over it
 function changeRowColor(rows, color) {

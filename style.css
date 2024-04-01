@@ -19,9 +19,7 @@ span {
 table {
     width: 100%;
     border-collapse: collapse;
-    border: solid 1px black;
     padding-top: 20px;
-    border-radius: 10px;
 }
 
 thead {
@@ -57,7 +55,6 @@ tr {
     height: 60%;
     background-color: #f7f7f7;
     border-radius: 10px;
-    ;
 }
 
 .flight-type-fields {

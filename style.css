@@ -27,6 +27,12 @@ thead {
     text-align: center;
 }
 
+#table-body {
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 600px;
+}
+
 tbody {
     text-align: center;
     cursor: pointer;
@@ -146,7 +152,7 @@ span {
 
 .flight-info {
     position: fixed;
-    width:inherit;
+    width: fit-content;
     height: fit-content;
     background: rgb(218, 230, 240);
     border: 1px solid black;
@@ -176,7 +182,7 @@ span {
 
 /* Popup container */
 #full-info {
-    width: 100%;
+    width: fit-content;
     height: auto;
     border-collapse: collapse;
     padding-top: 60px;
@@ -204,6 +210,5 @@ span {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;  
-    padding-bottom: 100px;
+    margin-top: 20px;
 }

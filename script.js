@@ -46,7 +46,8 @@ const table = document.getElementById("flights-table");
 const tableBody = document.createElement("tbody");
 tableBody.id = "table-body";
 
-function fixTime(time) { // duplicated function to fix timing format (24 hours issue)
+
+function fixTime(time) { // Function to fix timing format (24 hours issue)
     const timeString = time.split(/[/ , : " "]+/);
     var year = timeString[2];
     var month = timeString[0]; // Months are 0-indexed

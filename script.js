@@ -46,49 +46,29 @@ const table = document.getElementById("flights-table");
 const tableBody = document.createElement("tbody");
 tableBody.id = "table-body";
 
+function fixTime(time) { // duplicated function to fix timing format (24 hours issue)
+    const timeString = time.split(/[/ , : " "]+/);
+    var year = timeString[2];
+    var month = timeString[0]; // Months are 0-indexed
+    var day = timeString[1];
+    var hour = timeString[3];
+    var minute = timeString[4];
 
-function fixSchedueTime(itemInJson) { // duplicated function to fix timing format (24 hours issue)
-    var time = new Date(jsonFlights[itemInJson].schedueTime);
-    if (time.getHours() === 24) {
-        time.setHours(schedueTime.getHours() % 24);
+    if (hour > 23) {
+        hour = Number(hour % 24);
+        hour = hour.toString().padStart(2, "0");
     }
-
-    // Extract year, month, day, hour, and minute
-    const year = time.getFullYear().toString().padStart(2, "0");
-    const month = (time.getMonth() + 1).toString().padStart(2, "0"); // Months are 0-indexed
-    const day = time.getDate().toString().padStart(2, "0");
-    const hour = time.getHours().toString().padStart(2, "0");
-    const minute = time.getMinutes().toString().padStart(2, "0");
-
     // Manually format the date and time
-    const formattedTime = `${year}/${month}/${day}, ${hour}:${minute}`;
-    return formattedTime;
-}
-
-function fixActualTime(itemInJson) { // duplicated function to fix timing format (24 hours issue)
-    var time = new Date(jsonFlights[itemInJson].actualTime);
-    if (time.getHours() === 24) {
-        time.setHours(schedueTime.getHours() % 24);
-    }
-
-    // Extract year, month, day, hour, and minute
-    const year = time.getFullYear().toString().padStart(2, "0");
-    const month = (time.getMonth() + 1).toString().padStart(2, "0"); // Months are 0-indexed
-    const day = time.getDate().toString().padStart(2, "0");
-    const hour = time.getHours().toString().padStart(2, "0");
-    const minute = time.getMinutes().toString().padStart(2, "0");
-
-    // Manually format the date and time
-    const formattedTime = `${year}/${month}/${day}, ${hour}:${minute}`;
+    const formattedTime = `${month}/${day}/${year}, ${hour}:${minute}`;
     return formattedTime;
 }
 
 function populateTable() {
     for (let item in jsonFlights) {
-        // var schedueTime = fixSchedueTime(item, schedueTime);
-        // var actualTime = fixActualTime(item, actualTime)
         var schedueTime = new Date(jsonFlights[item].schedueTime).toLocaleDateString([], { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false }).trim(); // to be removed later or changed for easier fixes
+        schedueTime = fixTime(schedueTime);
         var actualTime = new Date(jsonFlights[item].actualTime).toLocaleDateString([], { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false }).trim(); // to be removed later or changed for easier fixes
+        actualTime = fixTime(actualTime);
         var bodyRow = document.createElement("tr");
         const image = document.createElement("img");
         image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
@@ -115,13 +95,16 @@ function populateTable() {
         }
 
     }
+    console.log(actualTime);
+    console.log(typeof (actualTime));
+    console.log(schedueTime);
     table.appendChild(tableBody);
     tableContainer.appendChild(table);
     tableContainer.style.textAlign = "center";
 }
 populateTable();
 
-function tableFilterDraft() {
+function tableFilterDraft() { // Going to test a difference simpler implementation
 
 }
 

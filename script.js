@@ -360,6 +360,7 @@ function styleImage(imageElement) {
 
 
 function showFullInfo(event) {
+    if (document.getElementById("temp-row")) document.getElementById("temp-row").remove();
     const row = event.currentTarget;
     const flightNumber = row.cells[1].textContent; // Assuming the flight number is in the second cell
     const flightInfo = document.querySelector(".flight-info");
@@ -368,10 +369,7 @@ function showFullInfo(event) {
 
     if (flight) {
         const fullInfoTable = document.getElementById("full-info");
-        //const tbody = document.getElementById("info-body");
-
         var tbody = document.getElementById("info-body");
-        tbody.appendChild(document.createElement("tr"));
         const image = document.createElement("img");
         image.src = flight.type === "A" ? "arrival.png" : "departure.png";
         styleImage(image);
@@ -395,7 +393,7 @@ function showFullInfo(event) {
             <td>${flight.zone}</td>
             <td>${flight.status}</td>
         `;
-
+        tbody.firstChild.id = "temp-row";
         //tbody.appendChild(newRow);
         fullInfoTable.appendChild(tbody);
 
@@ -406,9 +404,7 @@ function showFullInfo(event) {
 
 document.getElementById("close-button").addEventListener("click", function () {
     document.querySelector('.flight-info').style.display = "none";
-    document.getElementsByTagName("tbody")[0].remove();
-
-
+    document.getElementById("temp-row").remove();
 });
 
 const mainTable = document.getElementById("flights-table").querySelectorAll("tr");

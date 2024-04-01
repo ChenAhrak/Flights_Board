@@ -16,57 +16,79 @@
     </div>
 
     <div class="searchContainer">
-        <input type="checkbox" name="flight-type" id="departures" value="D">
-        <label for="departures">המראות</label><br>
-        <input type="checkbox" name="flight-type" id="arrivals" value="A">
-        <label for="arrivals">נחיתות</label><br>
+        <div class="flight-type-fields">
+            <div class="departure-field">
+
+                <input type="checkbox" name="flight-type" id="departures" value="D">
+                <img src="departure.png" alt="" id="departure-icon">
+                <label for="departures">המראות</label><br>
+            </div>
+            <div class="arrival-field">
+                <input type="checkbox" name="flight-type" id="arrivals" value="A">
+                <img src="arrival.png" alt="" id="arrival-icon">
+                <label for="arrivals">נחיתות</label><br>
+
+            </div>
+        </div>
         <input type="text" id="flight-number" placeholder="מספר טיסה"><br>
-        <select name="country" id="country"></select><br>
-        <select name="city" id="city"></select><br>
-        <input type="date" id="from" placeholder="מתאריך"><br>
-        <input type="date" id="to" placeholder="עד תאריך"><br>
+        <div class="country-field">
+            <span>בחר מדינה:</span>
+            <select name="country" id="country"></select><br>
+        </div>
+        <div class="city-field">
+            <span>בחר עיר:</span>
+            <select name="city" id="city"></select><br>
+        </div>
+        <div class="from-field">
+            <span>מתאריך:</span>
+            <input type="date" id="from" placeholder="מתאריך"><br>
+        </div>
+        <div class="to-field">
+            <span>עד תאריך:</span>
+            <input type="date" id="to" placeholder="עד תאריך"><br>
+        </div>
         <button onclick=filterTable()>חיפוש</button>
     </div>
 
-    <div class="statistic-info"><span onclick="showStats()">מידע סטטיסטי</span></div>
-
+    <!-- <div class="statistic-info"><span>מידע סטטיסטי</span></div> -->
     <div class="flight-info">
+        <button id="close-button">Close</button>
         <table id="full-info">
             <thead id="info-header">
                 <tr>
-                    <td>סוג טיסה</td>
-                    <td>שם מקוצר של חברת התעופה</td>
-                    <td>מספר הטיסה</td>
-                    <td>שם מלא של חברת התעופה</td>
-                    <td>זמן מתוכנן</td>
-                    <td>זמן בפועל</td>
-                    <td>קוד נמל תעופה ביעד</td>
-                    <td>שם שדה התעופה ביעד / במקור</td>
-                    <td>שם העיר ביעד / במקור</td>
-                    <td>ארץ היעד / המקור</td>
-                    <td>טרמינל</td>
-                    <td>דלפק צ'ק אין</td>
-                    <td>איזור הדלפק</td>
-                    <td>סטטוס</td>
+                    <th>סוג טיסה</th>
+                    <th>שם מקוצר של חברת התעופה</th>
+                    <th>מספר הטיסה</th>
+                    <th>שם מלא של חברת התעופה</th>
+                    <th>זמן מתוכנן</th>
+                    <th>זמן בפועל</th>
+                    <th>קוד נמל תעופה ביעד</th>
+                    <th>שם שדה התעופה ביעד / במקור</th>
+                    <th>שם העיר ביעד / במקור</th>
+                    <th>ארץ היעד / המקור</th>
+                    <th>טרמינל</th>
+                    <th>דלפק צ'ק אין</th>
+                    <th>איזור הדלפק</th>
+                    <th>סטטוס</th>
                 </tr>
             </thead>
+
         </table>
     </div>
-
     <div id="tableContainer">
         <table id="flights-table">
             <thead id="table-header">
                 <tr>
-                    <td>סוג טיסה</td>
-                    <td>מספר הטיסה</td>
-                    <td>שם מלא של חברת התעופה</td>
-                    <td>זמן מתוכנן</td>
-                    <td>זמן בפועל</td>
-                    <td>שם שדה התעופה ביעד / במקור</td>
-                    <td>שם העיר ביעד / במקור</td>
-                    <td>ארץ היעד / המקור</td>
-                    <td>טרמינל</td>
-                    <td>סטטוס</td>
+                    <th>סוג טיסה</th>
+                    <th>מספר הטיסה</th>
+                    <th>שם מלא של חברת התעופה</th>
+                    <th>זמן מתוכנן</th>
+                    <th>זמן בפועל</th>
+                    <th>שם שדה התעופה ביעד / במקור</th>
+                    <th>שם העיר ביעד / במקור</th>
+                    <th>ארץ היעד / המקור</th>
+                    <th>טרמינל</th>
+                    <th>סטטוס</th>
                 </tr>
             </thead>
         </table>

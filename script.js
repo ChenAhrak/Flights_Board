@@ -1,11 +1,5 @@
 ﻿
 
-const searchContainer = document.getElementsByClassName("searchContainer"); // redundant?
-const perFlightInfo = document.getElementById("full-info");
-
-perFlightInfo.style.visibility = "hidden";
-
-
 // Extract unique country values from jsonFlights
 const uniqueCountries = new Set(" "); // Initialize with an empty string to add an empty option
 const countries = document.getElementById("country");
@@ -137,7 +131,7 @@ function filterTable() {
     const from = document.getElementById("from").value;
     const to = document.getElementById("to").value;
     console.log(country, city, from, to, flightType[0].checked, flightType[1].checked);
-    
+
     // when all filters are empty
     if (country == "" && city == "" && flightNumber == "" && from == "" && to == "" && !flightType[0].checked && !flightType[1].checked) {
         alert("בחר באחת או יותר מאפשרויות החיפוש");
@@ -147,180 +141,180 @@ function filterTable() {
         for (let item in jsonFlights) {
             const schedueTime = new Date(jsonFlights[item].schedueTime).toLocaleDateString([], { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false }).trim();
             const actualTime = new Date(jsonFlights[item].actualTime).toLocaleDateString([], { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false }).trim();
-            
+
             //when only one filter is selected
             if (country == jsonFlights[item].country && city == "" && flightNumber == "" && from == "" && to == "" && !flightType[0].checked && !flightType[1].checked) { // why county has value
-                generateTable(item, schedueTime, actualTime);             
+                generateTable(item, schedueTime, actualTime);
             }
-           
+
             //when only one filter is selected
             else if (country == "" && city == jsonFlights[item].city && flightNumber == "" && from == "" && to == "" && !flightType[0].checked && !flightType[1].checked) {
-                generateTable(item,schedueTime,actualTime);
+                generateTable(item, schedueTime, actualTime);
             }
             else if (country == "" && city == "" && flightNumber == jsonFlights[item].number && from == "" && to == "" && !flightType[0].checked && !flightType[1].checked) {
-                generateTable(item,schedueTime,actualTime);
+                generateTable(item, schedueTime, actualTime);
 
             }
             else if (country == "" && city == "" && flightNumber == "" && from == "" && to == "" && flightType[0].checked && flightType[0].value == jsonFlights[item].type) {
-                generateTable(item,schedueTime,actualTime);
+                generateTable(item, schedueTime, actualTime);
 
             }
             else if (country == "" && city == "" && flightNumber == "" && from == "" && to == "" && flightType[1].checked && flightType[1].value == jsonFlights[item].type) {
-                generateTable(item,schedueTime,actualTime);
+                generateTable(item, schedueTime, actualTime);
 
             }
 
             else if (country == "" && city == "" && flightNumber == "" && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && !flightType[0].checked && !flightType[1].checked) {
-                generateTable(item,schedueTime,actualTime);
+                generateTable(item, schedueTime, actualTime);
 
             }
 
             //when two filters are selected
             else if (country == jsonFlights[item].country && city == "" && flightNumber == "" && from == "" && to == "" && flightType[0].checked && flightType[0].value == jsonFlights[item].type) {
-                generateTable(item,schedueTime,actualTime);
+                generateTable(item, schedueTime, actualTime);
 
             }
             else if (country == "" && city == jsonFlights[item].city && flightNumber == "" && from == "" && to == "" && flightType[0].checked && flightType[0].value == jsonFlights[item].type) {
-                generateTable(item,schedueTime,actualTime);
+                generateTable(item, schedueTime, actualTime);
 
             }
             else if (country == "" && city == "" && flightNumber == jsonFlights[item].number && from == "" && to == "" && flightType[0].checked && flightType[0].value == jsonFlights[item].type) {
-                generateTable(item,schedueTime,actualTime);
+                generateTable(item, schedueTime, actualTime);
 
             }
             else if (country == jsonFlights[item].country && city == "" && flightNumber == "" && from == "" && to == "" && flightType[1].checked && flightType[1].value == jsonFlights[item].type) {
-                generateTable(item,schedueTime,actualTime);
+                generateTable(item, schedueTime, actualTime);
 
             }
             else if (country == "" && city == jsonFlights[item].city && flightNumber == "" && from == "" && to == "" && flightType[1].checked && flightType[1].value == jsonFlights[item].type) {
-                generateTable(item,schedueTime,actualTime);
+                generateTable(item, schedueTime, actualTime);
 
             }
             else if (country == "" && city == "" && flightNumber == jsonFlights[item].number && from == "" && to == "" && flightType[1].checked && flightType[1].value == jsonFlights[item].type) {
-                generateTable(item,schedueTime,actualTime);
+                generateTable(item, schedueTime, actualTime);
 
             }
             else if (country == "" && city == "" && flightNumber == "" && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && flightType[0].checked && flightType[0].value == jsonFlights[item].type) {
-                generateTable(item,schedueTime,actualTime);
+                generateTable(item, schedueTime, actualTime);
 
             }
             else if (country == "" && city == "" && flightNumber == "" && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && flightType[1].checked && flightType[1].value == jsonFlights[item].type) {
-                generateTable(item,schedueTime,actualTime);
+                generateTable(item, schedueTime, actualTime);
 
             }
             else if (country == jsonFlights[item].country && city == jsonFlights[item].city && flightNumber == "" && from == "" && to == "" && !flightType[0].checked && !flightType[1].checked) {
-                generateTable(item,schedueTime,actualTime);
+                generateTable(item, schedueTime, actualTime);
 
             }
             else if (country == jsonFlights[item].country && city == "" && flightNumber == jsonFlights[item].number && from == "" && to == "" && !flightType[0].checked && !flightType[1].checked) {
-                generateTable(item,schedueTime,actualTime);
+                generateTable(item, schedueTime, actualTime);
 
             }
             else if (country == jsonFlights[item].country && city == "" && flightNumber == "" && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && !flightType[0].checked && !flightType[1].checked) {
-                generateTable(item,schedueTime,actualTime);
+                generateTable(item, schedueTime, actualTime);
 
             }
             else if (country == "" && city == jsonFlights[item].city && flightNumber == jsonFlights[item].number && from == "" && to == "" && !flightType[0].checked && !flightType[1].checked) {
-                generateTable(item,schedueTime,actualTime);
+                generateTable(item, schedueTime, actualTime);
 
             }
 
             //when three filters are selected
             else if (country == "" && city == jsonFlights[item].city && flightNumber == jsonFlights[item].number && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && !flightType[0].checked && !flightType[1].checked) {
-                generateTable(item,schedueTime,actualTime);
+                generateTable(item, schedueTime, actualTime);
 
             }
             else if (country == jsonFlights[item].country && city == jsonFlights[item].city && flightNumber == "" && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && !flightType[0].checked && !flightType[1].checked) {
-                generateTable(item,schedueTime,actualTime);
+                generateTable(item, schedueTime, actualTime);
 
             }
             else if (country == jsonFlights[item].country && city == "" && flightNumber == jsonFlights[item].number && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && !flightType[0].checked && !flightType[1].checked) {
-                generateTable(item,schedueTime,actualTime);
+                generateTable(item, schedueTime, actualTime);
 
             }
             else if (country == jsonFlights[item].country && city == jsonFlights[item].city && flightNumber == jsonFlights[item].number && from == "" && to == "" && !flightType[0].checked && !flightType[1].checked) {
-                generateTable(item,schedueTime,actualTime);
+                generateTable(item, schedueTime, actualTime);
 
             }
             else if (country == jsonFlights[item].country && city == jsonFlights[item].city && flightNumber == "" && from == "" && to == "" && flightType[0].checked && flightType[0].value == jsonFlights[item].type) {
-                generateTable(item,schedueTime,actualTime);
+                generateTable(item, schedueTime, actualTime);
 
             }
             else if (country == jsonFlights[item].country && city == "" && flightNumber == jsonFlights[item].number && from == "" && to == "" && flightType[0].checked && flightType[0].value == jsonFlights[item].type) {
-                generateTable(item,schedueTime,actualTime);
+                generateTable(item, schedueTime, actualTime);
 
             }
             else if (country == jsonFlights[item].country && city == "" && flightNumber == "" && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && flightType[0].checked && flightType[0].value == jsonFlights[item].type) {
-                generateTable(item,schedueTime,actualTime);
+                generateTable(item, schedueTime, actualTime);
 
             }
             else if (country == jsonFlights[item].country && city == "" && flightNumber == "" && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && flightType[1].checked && flightType[1].value == jsonFlights[item].type) {
-                generateTable(item,schedueTime,actualTime);
+                generateTable(item, schedueTime, actualTime);
 
             }
             else if (country == jsonFlights[item].country && city == jsonFlights[item].city && flightNumber == "" && from == "" && to == "" && flightType[0].checked && flightType[0].value == jsonFlights[item].type) {
-                generateTable(item,schedueTime,actualTime);
+                generateTable(item, schedueTime, actualTime);
 
             }
             else if (country == jsonFlights[item].country && city == jsonFlights[item].city && flightNumber == "" && from == "" && to == "" && flightType[1].checked && flightType[1].value == jsonFlights[item].type) {
-                generateTable(item,schedueTime,actualTime);
+                generateTable(item, schedueTime, actualTime);
 
             }
             else if (country == jsonFlights[item].country && city == "" && flightNumber == jsonFlights[item].number && from == "" && to == "" && flightType[0].checked && flightType[0].value == jsonFlights[item].type) {
-                generateTable(item,schedueTime,actualTime);
+                generateTable(item, schedueTime, actualTime);
 
             }
             else if (country == jsonFlights[item].country && city == "" && flightNumber == jsonFlights[item].number && from == "" && to == "" && flightType[1].checked && flightType[1].value == jsonFlights[item].type) {
-                generateTable(item,schedueTime,actualTime);
+                generateTable(item, schedueTime, actualTime);
 
             }
             else if (country == "" && city == jsonFlights[item].city && flightNumber == jsonFlights[item].number && from == "" && to == "" && flightType[0].checked && flightType[0].value == jsonFlights[item].type) {
-                generateTable(item,schedueTime,actualTime);
+                generateTable(item, schedueTime, actualTime);
 
             }
             else if (country == "" && city == jsonFlights[item].city && flightNumber == jsonFlights[item].number && from == "" && to == "" && flightType[1].checked && flightType[1].value == jsonFlights[item].type) {
-                generateTable(item,schedueTime,actualTime);
+                generateTable(item, schedueTime, actualTime);
 
             }
 
             //when four filters are selected
             else if (country == "" && city == jsonFlights[item].city && flightNumber == jsonFlights[item].number && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && flightType[0].checked && flightType[0].value == jsonFlights[item].type) {
-                generateTable(item,schedueTime,actualTime);
+                generateTable(item, schedueTime, actualTime);
 
             }
             else if (country == "" && city == jsonFlights[item].city && flightNumber == jsonFlights[item].number && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && flightType[1].checked && flightType[1].value == jsonFlights[item].type) {
-                generateTable(item,schedueTime,actualTime);
+                generateTable(item, schedueTime, actualTime);
 
             }
             else if (country == jsonFlights[item].country && city == jsonFlights[item].city && flightNumber == "" && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && flightType[0].checked && flightType[0].value == jsonFlights[item].type) {
-                generateTable(item,schedueTime,actualTime);
+                generateTable(item, schedueTime, actualTime);
 
             }
             else if (country == jsonFlights[item].country && city == jsonFlights[item].city && flightNumber == "" && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && flightType[1].checked && flightType[1].value == jsonFlights[item].type) {
-                generateTable(item,schedueTime,actualTime);
+                generateTable(item, schedueTime, actualTime);
 
 
             }
             else if (country == jsonFlights[item].country && city == jsonFlights[item].city && flightNumber == jsonFlights[item].number && from == "" && to == "" && flightType[0].checked && flightType[0].value == jsonFlights[item].type) {
-                generateTable(item,schedueTime,actualTime);
+                generateTable(item, schedueTime, actualTime);
 
             }
             else if (country == jsonFlights[item].country && city == jsonFlights[item].city && flightNumber == jsonFlights[item].number && from == "" && to == "" && flightType[1].checked && flightType[1].value == jsonFlights[item].type) {
-                generateTable(item,schedueTime,actualTime);
+                generateTable(item, schedueTime, actualTime);
 
             }
             else if (country == jsonFlights[item].country && city == jsonFlights[item].city && flightNumber == jsonFlights[item].number && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && !flightType[0].checked && !flightType[1].checked) {
-                generateTable(item,schedueTime,actualTime);
+                generateTable(item, schedueTime, actualTime);
 
             }
 
             //when five filters are selected
             else if (country == jsonFlights[item].country && city == jsonFlights[item].city && flightNumber == jsonFlights[item].number && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && flightType[0].checked && flightType[0].value == jsonFlights[item].type) {
-                generateTable(item,schedueTime,actualTime);
+                generateTable(item, schedueTime, actualTime);
 
             }
             else if (country == jsonFlights[item].country && city == jsonFlights[item].city && flightNumber == jsonFlights[item].number && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && flightType[1].checked && flightType[1].value == jsonFlights[item].type) {
-                generateTable(item,schedueTime,actualTime);
+                generateTable(item, schedueTime, actualTime);
 
             }
         }
@@ -331,7 +325,7 @@ function filterTable() {
     tableRows.forEach((row) => changeRowColor(row, lightBlue));
 }
 
-function generateTable(item,schedueTime,actualTime) {
+function generateTable(item, schedueTime, actualTime) {
     var bodyRow = document.createElement("tr");
     const image = document.createElement("img");
     image.src = jsonFlights[item].type === "A" ? "arrival.png" : "departure.png";
@@ -367,13 +361,12 @@ function showFullInfo(event) {
     const flightInfo = document.querySelector(".flight-info");
     // Find the corresponding flight in jsonFlights array
     const flight = jsonFlights.find(item => item.number === parseInt(flightNumber));
-    
+
     if (flight) {
         const fullInfoTable = document.getElementById("full-info");
         const tbody = document.createElement("tbody");
-        fullInfoTable.appendChild(tbody);
 
-     
+
         // Create a new row for the popup
         const newRow = document.createElement("tr");
         newRow.innerHTML = `
@@ -383,27 +376,33 @@ function showFullInfo(event) {
             <td>${flight.operatorLong}</td>
             <td>${flight.schedueTime}</td>
             <td>${flight.actualTime}</td>
+            <td>${flight.cityCode}</td>
             <td>${flight.airport}</td>
             <td>${flight.city}</td>
             <td>${flight.country}</td>
             <td>${flight.terminal}</td>
+            <td>${flight.counter}</td>
+            <td>${flight.zone}</td>
             <td>${flight.status}</td>
         `;
 
         tbody.appendChild(newRow);
-        fullInfoTable.appendChild(tbody);
-        flightInfo.appendChild(fullInfoTable);
+        flightInfo.appendChild(tbody);
+
         // Show the popup
-   
+
         flightInfo.style.display = "block";
 
-       
+
+
     }
 }
 
-document.getElementById("close-button").addEventListener("click", function() {
+document.getElementById("close-button").addEventListener("click", function () {
     document.querySelector('.flight-info').style.display = "none";
-   
+    document.getElementsByTagName("tbody")[0].remove();
+
+
 });
 
 const mainTable = document.getElementById("flights-table").querySelectorAll("tr");

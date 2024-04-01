@@ -385,8 +385,19 @@ function showFullInfo(event) {
     const row = event.currentTarget;
     const flightNumber = row.cells[1].textContent; // Assuming the flight number is in the second cell
     const flightInfo = document.querySelector(".flight-info");
+    const timeScheduled = row.cells[3].textContent;
+    const timeActual = row.cells[4].textContent;
     // Find the corresponding flight in jsonFlights array
-    const flight = jsonFlights.find(item => item.number === parseInt(flightNumber));
+    for (item in jsonFlights) {
+        var schedueTime = new Date(jsonFlights[item].schedueTime).toLocaleDateString([], { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false }).trim();
+        schedueTime = fixTime(schedueTime);
+        var actualTime = new Date(jsonFlights[item].actualTime).toLocaleDateString([], { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false }).trim();
+        actualTime = fixTime(actualTime);
+        if (jsonFlights[item].number == flightNumber && schedueTime === timeScheduled && actualTime === timeActual) {
+            var flight = jsonFlights[item];
+            break;
+        }
+    }
 
     if (flight) {
         const fullInfoTable = document.getElementById("full-info");
@@ -415,7 +426,6 @@ function showFullInfo(event) {
             <td>${flight.status}</td>
         `;
         tbody.firstChild.id = "temp-row";
-        //tbody.appendChild(newRow);
         fullInfoTable.appendChild(tbody);
 
         // Show the popup

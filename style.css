@@ -181,6 +181,17 @@ button:hover {
     }
 }
 
+@keyframes slideBottom {
+    from {
+        bottom: 200px;
+        opacity: 0
+    }
+
+    to {
+        bottom: 850px;
+        opacity: 1
+    }
+}
 
 /* Modal container */
 #full-info {
@@ -247,4 +258,27 @@ button:hover {
     left: 0;
     bottom: 0;
     opacity: 1;
+}
+
+.stats-div {
+    display:block;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    padding: 30px;
+    /*justify-content: center;*/
+    align-content: center;
+    align-items: center;
+}
+
+#stats-button{
+    font-size: 20px;
+}
+
+#pie-chart {
+    display: none;
+}
+
+#pie-chart > button {
+    font-size: 20px;
 }

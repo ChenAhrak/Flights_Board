@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <script src="flights.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <title>Flights</title>
 </head>
 
@@ -13,9 +14,13 @@
     <div class="header">
         <img class="headImg" src="passanger-plane.jpg" alt="plane image" />
         <h1>ברוכים הבאים ללוח הטיסות של המדינה</h1>
+        <div class="stats-div">
+            <button id="stats-button" onclick=showStats()>מידע סטטיסטי</button>
+        </div>
     </div>
 
     <div class="searchContainer">
+
         <div class="flight-type-fields">
             <div class="departure-field">
                 <input type="checkbox" name="flight-type" id="departures" value="D">
@@ -48,15 +53,18 @@
             <span>עד תאריך:</span>
             <input type="date" id="to" placeholder="עד תאריך"><br>
         </div>
-        
+
     </div>
     <div class="search-button">
         <button onclick=filterTable()>חיפוש</button>
     </div>
     <div class="sort-buttons">
         <button id="country-sort-btn" onclick=sortTableByCountry()>מיון לפי מדינה <img src="up-down.png" alt="" id="up-down-img"></button>
-         <button id="city-sort-btn" onclick=sortTableByCity()>מיון לפי עיר <img src="up-down.png" alt="" id="up-down-img"></button>
+        <button id="city-sort-btn" onclick=sortTableByCity()>מיון לפי עיר <img src="up-down.png" alt="" id="up-down-img"></button>
         <button id="flight-number-sort-btn" onclick=sortTableByFlightNumber()>מיון לפי מספר טיסה <img src="up-down.png" alt="" id="up-down-img"></button>
+    </div>
+    <div class="pie-plot" id="pie-chart">
+        <button id="close-chart">X</button>
     </div>
     <div class="flight-info">
         <button id="close-button">X</button>

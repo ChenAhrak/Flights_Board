@@ -3,6 +3,9 @@
 // Extract unique country values from jsonFlights
 const uniqueCountries = new Set(" "); // Initialize with an empty string to add an empty option
 const countries = document.getElementById("country");
+var countArrivals;
+var countDepartures;
+
 
 const departuresCheck = document.getElementById("departures");
 departuresCheck.checked = true;
@@ -65,7 +68,11 @@ function fixTime(time) { // Function to fix timing format (24 hours issue)
 }
 
 function populateTable() {
+    countArrivals = 0;
+    countDepartures = 0;
     for (let item in jsonFlights) {
+        countArrivals += jsonFlights[item].type == "A" ? 1 : 0;
+        countDepartures += jsonFlights[item].type == "D" ? 1 : 0;
         var schedueTime = new Date(jsonFlights[item].schedueTime).toLocaleDateString([], { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false }).trim(); // to be removed later or changed for easier fixes
         schedueTime = fixTime(schedueTime);
         var actualTime = new Date(jsonFlights[item].actualTime).toLocaleDateString([], { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false }).trim(); // to be removed later or changed for easier fixes
@@ -349,11 +356,11 @@ function filterTable() {
                 console.log("No match");
                 const noMatchDiv = document.createElement("div");
                 const noMatchImg = document.createElement("img");
-                const noMatch = document.createElement("h1");
+                const noMatch = document.createElement("h2");
                 noMatchDiv.className = "no-match-container";
                 noMatchImg.src = "nomatch.png";
-                noMatchImg.style.width = "100px";
-                noMatchImg.style.height = "100px";
+                noMatchImg.style.width = "200px";
+                noMatchImg.style.height = "200px";
                 noMatch.textContent = "לא נמצאו תוצאות התואמות לחיפוש שלך";
                 noMatchDiv.appendChild(noMatchImg);
                 noMatchDiv.appendChild(noMatch);
@@ -570,7 +577,6 @@ function showFullInfo(event) {
 document.getElementById("close-button").addEventListener("click", function () {
     document.querySelector('.flight-info').style.display = "none";
     document.getElementById("temp-row").remove();
-
 });
 
 // Add event listeners to the rows in the table to show modal with full information
@@ -598,6 +604,41 @@ function changeRowColor(rows, color) {
     });
 }
 
+const flightTypeStats = [{
+    values: [countArrivals, countDepartures],
+    labels: ['נחיתות', 'המראות'],
+    type: 'pie'
+}];
+
+function showStats() {
+    const chartFormat = document.getElementById("pie-chart");
+    chartFormat.style.position = "relative";
+    const chartClose = document.getElementById("close-chart");
+    chartClose.style.position = "absolute";
+    chartClose.style.marginRight = "150px";
+    chartClose.style.top = "10px";
+    chartClose.style.right = "10px";
+    const layout = {
+        title: 'המראות ונחיתות',
+        paper_bgcolor : "#f0f8ff",
+    };
+    Plotly.newPlot('pie-chart', flightTypeStats, layout);
+    chartFormat.style.height = "fit-content";
+    chartFormat.style.width = "fit-content";
+    chartFormat.style.margin = "auto";
+    chartFormat.style.marginTop = "50px";
+    chartFormat.style.paddingRight = "150px";
+    chartFormat.style.display = "block";
+    chartFormat.style.animationName = "slideBottom";
+    chartFormat.style.animationDuration = "0.5s";
+    chartFormat.style.bottom = "850px";
+
+}
+
+const closeChartBtn = document.querySelector('#close-chart');
+closeChartBtn.addEventListener('click', () => {
+    document.getElementById('pie-chart').style.display = 'none';
+});
 
 const tableRows = document.querySelectorAll("tbody tr");
 const lightBlue = "#89cff0";
@@ -613,7 +654,7 @@ function animateImage() {
 
     const translateX = screenWidth + planeImage.offsetWidth; // Horizontal movement distance
     const translateY = -screenHeight - planeImage.offsetHeight; // Vertical movement distance
-    const duration = 6000; // Animation duration in milliseconds
+    const duration = 6000; // Animation duration 6 seconds
 
     let progress = 0;
 
@@ -633,8 +674,8 @@ function animateImage() {
                 // Set initial position at bottom corner
                 planeImage.style.transform = `translateX(0px) translateY(${screenHeight}px)`;
                 planeImage.style.display = ""; // Reset display to visible
-                animateImage(); // Restart the animation
-            }, 15000); // 15000 milliseconds (15 seconds)
+                animateImage(); // Restart the animation after 15 sec
+            }, 15000);
         }
     };
     requestAnimationFrame(animationStep);

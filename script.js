@@ -264,7 +264,7 @@ function filterTable() {
                 generateTable(item, schedueTime, actualTime);
 
             }
-            else if(country==jsonFlights[item].country && city=="" && getFlightNumber=="" && new Date(from)<=new Date(jsonFlights[item].schedueTime) && new Date(to)>=new Date(jsonFlights[item].schedueTime) && flightType[0].checked && flightType[1].checked){
+            else if(country==jsonFlights[item].country && city=="" && flightNumber=="" && new Date(from)<=new Date(jsonFlights[item].schedueTime) && new Date(to)>=new Date(jsonFlights[item].schedueTime) && flightType[0].checked && flightType[1].checked){
                 generateTable(item, schedueTime, actualTime);
             }
             

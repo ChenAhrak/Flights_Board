@@ -145,29 +145,29 @@ function filterTable() {
         document.querySelector(".no-match-container").remove();
         table.style.display = "block";
     }
-    
+
 
     // when all filters are empty
     if (country == "" && city == "" && flightNumber == "" && from == "" && to == "" && !flightType[0].checked && !flightType[1].checked) {
         alert("בחר באחת או יותר מאפשרויות החיפוש");
     }
     // when the type of flight is not selected
-     else if(!flightType[0].checked && !flightType[1].checked) {
+    else if (!flightType[0].checked && !flightType[1].checked) {
         alert("בחר סוג טיסה")
     }
-    
-     // Check if the from date is before the to date
-     else if(from >=to) {
+
+    // Check if the from date is before the to date
+    else if (from >= to && from != "" && to != "") {
         alert("תאריך התחלה צריך להיות לפני תאריך סיום");
     }
-    
+
 
     else {
         tableBody.innerHTML = "";
         for (let item in jsonFlights) {
             const schedueTime = new Date(jsonFlights[item].schedueTime).toLocaleDateString([], { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false }).trim();
             const actualTime = new Date(jsonFlights[item].actualTime).toLocaleDateString([], { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false }).trim();
-           
+
 
             // when only one filter is selected
             if (country == jsonFlights[item].country && city == "" && flightNumber == "" && from == "" && to == "" && flightType[0].checked && flightType[1].checked) {
@@ -182,8 +182,8 @@ function filterTable() {
                 generateTable(item, schedueTime, actualTime);
 
             }
-           
-             if (country == "" && city == "" && flightNumber == "" && from == "" && to == "" && flightType[0].checked && flightType[0].value == jsonFlights[item].type) {
+
+            if (country == "" && city == "" && flightNumber == "" && from == "" && to == "" && flightType[0].checked && flightType[0].value == jsonFlights[item].type) {
                 generateTable(item, schedueTime, actualTime);
 
             }
@@ -260,11 +260,11 @@ function filterTable() {
                 generateTable(item, schedueTime, actualTime);
 
             }
-            else if(country==jsonFlights[item].country && city=="" && flightNumber=="" && new Date(from)<=new Date(jsonFlights[item].schedueTime) && new Date(to)>=new Date(jsonFlights[item].schedueTime) && flightType[0].checked && flightType[1].checked){
+            else if (country == jsonFlights[item].country && city == "" && flightNumber == "" && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && flightType[0].checked && flightType[1].checked) {
                 generateTable(item, schedueTime, actualTime);
             }
-            
-        
+
+
             else if (country == jsonFlights[item].country && city == jsonFlights[item].city && flightNumber == jsonFlights[item].number && from == "" && to == "" && flightType[0].checked && flightType[1].checked) {
                 generateTable(item, schedueTime, actualTime);
 
@@ -313,19 +313,19 @@ function filterTable() {
                 generateTable(item, schedueTime, actualTime);
 
             }
-            else if(country=="" && city==jsonFlights[item].city && flightNumber=="" && new Date(from)<=new Date(jsonFlights[item].schedueTime) && new Date(to)>=new Date(jsonFlights[item].schedueTime) && flightType[0].checked && flightType[0].value == jsonFlights[item].type){
+            else if (country == "" && city == jsonFlights[item].city && flightNumber == "" && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && flightType[0].checked && flightType[0].value == jsonFlights[item].type) {
                 generateTable(item, schedueTime, actualTime);
             }
-            else if(country=="" && city==jsonFlights[item].city && flightNumber=="" && new Date(from)<=new Date(jsonFlights[item].schedueTime) && new Date(to)>=new Date(jsonFlights[item].schedueTime) && flightType[0].checked && flightType[1].checked){
+            else if (country == "" && city == jsonFlights[item].city && flightNumber == "" && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && flightType[0].checked && flightType[1].checked) {
                 generateTable(item, schedueTime, actualTime);
             }
-            else if(country==""  && city=="" && flightNumber==jsonFlights[item].number && new Date(from)<=new Date(jsonFlights[item].schedueTime) && new Date(to)>=new Date(jsonFlights[item].schedueTime) && flightType[0].checked && flightType[0].value == jsonFlights[item].type){
+            else if (country == "" && city == "" && flightNumber == jsonFlights[item].number && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && flightType[0].checked && flightType[0].value == jsonFlights[item].type) {
                 generateTable(item, schedueTime, actualTime);
             }
-            else if(country==""  && city=="" && flightNumber==jsonFlights[item].number && new Date(from)<=new Date(jsonFlights[item].schedueTime) && new Date(to)>=new Date(jsonFlights[item].schedueTime) && flightType[1].checked && flightType[1].value == jsonFlights[item].type){
+            else if (country == "" && city == "" && flightNumber == jsonFlights[item].number && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && flightType[1].checked && flightType[1].value == jsonFlights[item].type) {
                 generateTable(item, schedueTime, actualTime);
             }
-            else if(country==""  && city=="" && flightNumber==jsonFlights[item].number && new Date(from)<=new Date(jsonFlights[item].schedueTime) && new Date(to)>=new Date(jsonFlights[item].schedueTime) && flightType[0].checked && flightType[1].checked){
+            else if (country == "" && city == "" && flightNumber == jsonFlights[item].number && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && flightType[0].checked && flightType[1].checked) {
                 generateTable(item, schedueTime, actualTime);
             }
 
@@ -338,7 +338,7 @@ function filterTable() {
                 generateTable(item, schedueTime, actualTime);
 
             }
-            else if(country=="" && city==jsonFlights[item].city && flightNumber==jsonFlights[item].number && new Date(from)<=new Date(jsonFlights[item].schedueTime) && new Date(to)>=new Date(jsonFlights[item].schedueTime) && flightType[0].checked && flightType[1].checked){
+            else if (country == "" && city == jsonFlights[item].city && flightNumber == jsonFlights[item].number && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && flightType[0].checked && flightType[1].checked) {
                 generateTable(item, schedueTime, actualTime);
             }
             else if (country == jsonFlights[item].country && city == jsonFlights[item].city && flightNumber == "" && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && flightType[0].checked && flightType[0].value == jsonFlights[item].type) {
@@ -358,7 +358,7 @@ function filterTable() {
                 generateTable(item, schedueTime, actualTime);
 
             }
-            
+
             //when five filters are selected
             else if (country == jsonFlights[item].country && city == jsonFlights[item].city && flightNumber == jsonFlights[item].number && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && flightType[0].checked && flightType[1].checked) {
                 generateTable(item, schedueTime, actualTime);
@@ -399,6 +399,7 @@ function filterTable() {
     tableRows.forEach((row) => changeRowColor(row, lightBlue));
 }
 
+// 
 function generateTable(item, schedueTime, actualTime) {
     var bodyRow = document.createElement("tr");
     const image = document.createElement("img");
@@ -442,7 +443,9 @@ function styleImage(imageElement) {
 
 
 function showFullInfo(event) {
-    if (document.getElementById("temp-row")) document.getElementById("temp-row").remove();
+    if (document.getElementById("temp-row")) {
+        document.getElementById("temp-row").remove();
+    }
     const row = event.currentTarget;
     const flightNumber = row.cells[1].textContent; // Assuming the flight number is in the second cell
     const flightInfo = document.querySelector(".flight-info");
@@ -493,16 +496,35 @@ function showFullInfo(event) {
 
         // Show the popup
         flightInfo.style.display = "block";
+
+        // Add event listener to the city cell to open a new tab with the wikipedia page of the city
+        const cityCell = document.getElementById("temp-row");
+        cityCell.addEventListener("click", linkToCountriesInfo);
     }
 }
 
+// Add event listener to the close button
 document.getElementById("close-button").addEventListener("click", function () {
     document.querySelector('.flight-info').style.display = "none";
     document.getElementById("temp-row").remove();
-});
 
+});
+// Add event listeners to the rows in the table to show popup with full information
 const mainTable = document.getElementById("flights-table").querySelectorAll("tr");
 mainTable.forEach(row => row.addEventListener("click", showFullInfo));
+
+
+// Function to open a new tab with the wikipedia page of the city
+function linkToCountriesInfo(event) {
+    const row = event.currentTarget;
+    const city = row.querySelector("td:nth-child(9)").textContent;
+    const cityFixed = city.charAt(0) + city.substring(1).toLowerCase();
+    const url = `https://en.wikipedia.org/wiki/${cityFixed}`;
+    window.open(url, "_blank");
+
+}
+
+
 
 // Function to change the background color of a row when the mouse hovers over it
 function changeRowColor(rows, color) {

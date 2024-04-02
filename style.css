@@ -192,6 +192,10 @@ span {
 #full-info tbody tr{
     width: 100%;
 }
+#full-info tbody :hover{
+    background-color: #c9d1f5;
+    
+}
 
 
 /* Close button */

@@ -147,11 +147,6 @@ function filterTable() {
     }
     
 
-    // if(from && to ==""){
-    //     new Date(to)= new Date(from);
-    // }
-   
-
     // when all filters are empty
     if (country == "" && city == "" && flightNumber == "" && from == "" && to == "" && !flightType[0].checked && !flightType[1].checked) {
         alert("בחר באחת או יותר מאפשרויות החיפוש");
@@ -162,9 +157,10 @@ function filterTable() {
     }
     
      // Check if the from date is before the to date
-     else if(from >to) {
+     else if(from >=to) {
         alert("תאריך התחלה צריך להיות לפני תאריך סיום");
     }
+    
 
     else {
         tableBody.innerHTML = "";

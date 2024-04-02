@@ -117,7 +117,6 @@ button {
 
 
 button {
-    /* Adjust width as needed */
     background-color: #007bff;
     color: #fff;
     border: none;
@@ -183,7 +182,7 @@ button:hover {
 
 @keyframes slideBottom {
     from {
-        bottom: 200px;
+        bottom: 500px;
         opacity: 0
     }
 

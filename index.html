@@ -12,7 +12,7 @@
 <body id="container" dir="rtl">
     <div class="header">
         <img class="headImg" src="passanger-plane.jpg" alt="plane image" />
-        <h1>ברוכים הבאים ללוח הטיסות הכי גדול במדינה</h1>
+        <h1>ברוכים הבאים ללוח הטיסות של המדינה</h1>
     </div>
 
     <div class="searchContainer">
@@ -49,7 +49,11 @@
         </div>
         <button onclick=filterTable()>חיפוש</button>
     </div>
-
+    <div class="sortButtons">
+        <button id="country-sort-btn" onclick=sortTableByCountry()>מיון לפי מדינה <img src="up-down.png" alt="" id="up-down-img"></button>
+         <button id="city-sort-btn" onclick=sortTableByCity()>מיון לפי עיר <img src="up-down.png" alt="" id="up-down-img"></button>
+        <button id="flight-number-sort-btn" onclick=sortTableByFlightNumber()>מיון לפי מספר טיסה <img src="up-down.png" alt="" id="up-down-img"></button>
+    </div>
     <div class="flight-info">
         <button id="close-button">X</button>
         <table id="full-info">

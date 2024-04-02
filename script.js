@@ -95,14 +95,15 @@ function populateTable() {
             fifthChild.style.color = "red";
             fifthChild.style.fontWeight = "bold";
         }
-        if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#afeeee";
+        if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#ceefef";
         else {
-            bodyRow.style.backgroundColor = "#9cffed";
+            bodyRow.style.backgroundColor = "#96c8d8";
         }
     }
     table.appendChild(tableBody);
     tableContainer.appendChild(table);
     tableContainer.style.textAlign = "center";
+
 }
 populateTable();
 
@@ -160,7 +161,6 @@ function filterTable() {
     else if (from >= to && from != "" && to != "") {
         alert("תאריך התחלה צריך להיות לפני תאריך סיום");
     }
-
 
     else {
         tableBody.innerHTML = "";
@@ -427,10 +427,102 @@ function generateTable(item, schedueTime, actualTime) {
         fifthChild.style.color = "red";
         fifthChild.style.fontWeight = "bold";
     }
-    if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#afeeee";
+    if (jsonFlights[item].type == "A") bodyRow.style.backgroundColor = "#ceefef";
     else {
-        bodyRow.style.backgroundColor = "#9cffed";
+        bodyRow.style.backgroundColor = "#96c8d8";
     }
+}
+
+// flag for Countries sorting
+let ascendingCountry = true;
+
+// Sort the table by the flight Country
+function sortTableByCountry() {
+    const rows = table.querySelectorAll("tbody tr");
+
+    // Convert to an array
+    const rowsArray = Array.from(rows);
+
+    rowsArray.sort(function (rowA, rowB) {
+        const countryA = rowA.cells[7].textContent.trim();
+        const countryB = rowB.cells[7].textContent.trim();
+
+        if (ascendingCountry) {
+            return countryA.localeCompare(countryB); // Sort alphabetically A-Z
+        } else {
+            return countryB.localeCompare(countryA); // Sort alphabetically Z-A
+        }
+    });
+
+    const tableBody = table.querySelector("tbody");
+    tableBody.innerHTML = "";
+
+    rowsArray.forEach(row => {
+        tableBody.appendChild(row);
+    });
+
+    // Toggle sorting direction for the next click
+    ascendingCountry = !ascendingCountry;
+}
+
+
+// flag for Cities sorting
+let ascendingCity = true;
+
+function sortTableByCity() {
+    const rows = table.querySelectorAll("tbody tr");
+
+    const rowsArray = Array.from(rows);
+
+    rowsArray.sort(function (rowA, rowB) {
+        const cityA = rowA.cells[6].textContent.trim();
+        const cityB = rowB.cells[6].textContent.trim();
+
+        if (ascendingCity) {
+            return cityA.localeCompare(cityB); // Sort alphabetically A-Z
+        } else {
+            return cityB.localeCompare(cityA); // Sort alphabetically Z-A
+        }
+    });
+
+
+    const tableBody = table.querySelector("tbody");
+    tableBody.innerHTML = "";
+
+    rowsArray.forEach(row => {
+        tableBody.appendChild(row);
+    });
+
+    ascendingCity = !ascendingCity;
+
+}
+
+let ascendingFlightNumber = true;
+
+function sortTableByFlightNumber() {
+    const rows = table.querySelectorAll("tbody tr");
+    const rowsArray = Array.from(rows);
+
+    rowsArray.sort((rowA, rowB) => {
+        const flightNumberA = parseInt(rowA.cells[1].textContent.trim());
+        const flightNumberB = parseInt(rowB.cells[1].textContent.trim());
+
+        if (ascendingFlightNumber) {
+            return flightNumberA - flightNumberB; // Sort ascending
+        } else {
+            return flightNumberB - flightNumberA; // Sort descending
+        }
+    });
+
+    const tableBody = table.querySelector("tbody");
+    tableBody.innerHTML = "";
+
+    // Append sorted rows back to the table
+    rowsArray.forEach(row => {
+        tableBody.appendChild(row);
+    });
+
+    ascendingFlightNumber = !ascendingFlightNumber;
 }
 
 function styleImage(imageElement) {
@@ -441,7 +533,7 @@ function styleImage(imageElement) {
 }
 
 
-
+// 
 function showFullInfo(event) {
     if (document.getElementById("temp-row")) {
         document.getElementById("temp-row").remove();

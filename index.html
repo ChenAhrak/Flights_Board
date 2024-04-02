@@ -18,7 +18,6 @@
     <div class="searchContainer">
         <div class="flight-type-fields">
             <div class="departure-field">
-
                 <input type="checkbox" name="flight-type" id="departures" value="D">
                 <img src="departure.png" alt="" id="departure-icon">
                 <label for="departures">המראות</label><br>
@@ -30,7 +29,9 @@
 
             </div>
         </div>
-        <input type="text" id="flight-number" placeholder="מספר טיסה"><br>
+        <div class="flight-number">
+            <input type="text" id="flight-number" placeholder="מספר טיסה">
+        </div>
         <div class="country-field">
             <span>בחר מדינה:</span>
             <select name="country" id="country"></select><br>
@@ -47,6 +48,9 @@
             <span>עד תאריך:</span>
             <input type="date" id="to" placeholder="עד תאריך"><br>
         </div>
+        
+    </div>
+    <div class="search-button">
         <button onclick=filterTable()>חיפוש</button>
     </div>
     <div class="sortButtons">
@@ -96,7 +100,7 @@
             </thead>
         </table>
     </div>
-    
+    <img src="airplane.png" alt="plane icon" id="moving-plane" />
 
     <script src="script.js"></script>
 </body>

@@ -633,3 +633,42 @@ function changeRowColor(rows, color) {
 const tableRows = document.querySelectorAll("tbody tr");
 const lightBlue = "#89cff0";
 tableRows.forEach((row) => changeRowColor(row, lightBlue));
+
+
+const planeImage = document.getElementById("moving-plane");
+const screenWidth = window.innerWidth; // Get screen width
+const screenHeight = window.innerHeight; // Get screen height
+
+function animateImage() {
+    const startTime = Date.now(); // Get start time for animation duration calculation
+
+    const translateX = screenWidth + planeImage.offsetWidth; // Horizontal movement distance
+    const translateY = -screenHeight - planeImage.offsetHeight; // Vertical movement distance
+    const duration = 6000; // Animation duration in milliseconds
+
+    let progress = 0;
+
+    const animationStep = () => {
+        progress = Math.min((Date.now() - startTime) / duration, 1); // Calculate animation progress
+
+        planeImage.style.transform = `translateX(${translateX * progress}px) translateY(${translateY * progress}px)`;
+        planeImage.style.opacity = 1 - (progress / 3); // Fade out during animation
+
+        if (progress < 1) {
+            requestAnimationFrame(animationStep); // Request next animation frame
+        } else {
+            planeImage.style.display = "none"; // Hide image temporarily
+
+            // Repeat after 15 seconds
+            setTimeout(() => {
+                // Set initial position at bottom corner
+                planeImage.style.transform = `translateX(0px) translateY(${screenHeight}px)`;
+                planeImage.style.display = ""; // Reset display to visible
+                animateImage(); // Restart the animation
+            }, 15000); // 15000 milliseconds (15 seconds)
+        }
+    };
+    requestAnimationFrame(animationStep);
+}
+
+animateImage();

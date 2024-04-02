@@ -115,12 +115,15 @@ function filterTable() {
     const city = document.getElementById("city").value.trim();
     const from = document.getElementById("from").value;
     const to = document.getElementById("to").value;
+    const sortBtn = document.querySelector(".sort-buttons");
+
     //console.log(country, city, from, to, flightType[0].checked, flightType[1].checked);
 
     // Remove the no match container if it exists
     if (document.querySelector(".no-match-container")) {
         document.querySelector(".no-match-container").remove();
         table.style.display = "block";
+        sortBtn.style.display = "flex";
     }
 
     // when all filters are empty
@@ -147,8 +150,6 @@ function filterTable() {
             if (country == jsonFlights[item].country && city == "" && flightNumber == "" && from == "" && to == "" && flightType[0].checked && flightType[1].checked) {
                 generateTable(item, schedueTime, actualTime);
             }
-
-            // when only one filter is selected
             else if (country == "" && city == jsonFlights[item].city && flightNumber == "" && from == "" && to == "" && flightType[0].checked && flightType[1].checked) {
                 generateTable(item, schedueTime, actualTime);
             }
@@ -157,7 +158,7 @@ function filterTable() {
 
             }
 
-            if (country == "" && city == "" && flightNumber == "" && from == "" && to == "" && flightType[0].checked && flightType[0].value == jsonFlights[item].type) {
+            else if (country == "" && city == "" && flightNumber == "" && from == "" && to == "" && flightType[0].checked && flightType[0].value == jsonFlights[item].type) {
                 generateTable(item, schedueTime, actualTime);
 
             }
@@ -204,14 +205,8 @@ function filterTable() {
                 generateTable(item, schedueTime, actualTime);
 
             }
-            else if (country == jsonFlights[item].country && city == jsonFlights[item].city && flightNumber == "" && from == "" && to == "" && !flightType[0].checked && !flightType[1].checked) {
-                generateTable(item, schedueTime, actualTime);
 
-            }
-            else if (country == jsonFlights[item].country && city == "" && flightNumber == jsonFlights[item].number && from == "" && to == "" && !flightType[0].checked && !flightType[1].checked) {
-                generateTable(item, schedueTime, actualTime);
 
-            }
             else if (country == jsonFlights[item].country && city == "" && flightNumber == "" && new Date(from) <= new Date(jsonFlights[item].schedueTime) && new Date(to) >= new Date(jsonFlights[item].schedueTime) && flightType[0].checked && flightType[1].checked) {
                 generateTable(item, schedueTime, actualTime);
 
@@ -349,6 +344,7 @@ function filterTable() {
 
             //when no match is found
             else if (item == jsonFlights.length - 1 && tableBody.innerHTML == "") {
+                sortBtn.style.display = "none";
                 table.style.display = "none";
                 console.log("No match");
                 const noMatchDiv = document.createElement("div");

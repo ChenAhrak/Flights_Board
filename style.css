@@ -220,7 +220,7 @@ button:hover {
     padding-bottom: 30px;
 }
 
-.sortButtons {
+.sort-buttons {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -231,7 +231,7 @@ button:hover {
     padding-right: 30px;
 }
 
-.sortButtons button {
+.sort-buttons button {
     font-size: 15px;
 }
 

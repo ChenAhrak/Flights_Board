@@ -103,33 +103,9 @@ function populateTable() {
     table.appendChild(tableBody);
     tableContainer.appendChild(table);
     tableContainer.style.textAlign = "center";
-
 }
+
 populateTable();
-
-function tableFilterDraft() { // Going to test a difference simpler implementation - still work in progress!
-    const flightType = document.getElementsByName("flight-type");
-    const flightNumber = document.getElementById("flight-number").value.trim();
-    const country = document.getElementById("country").value.trim();
-    const city = document.getElementById("city").value.trim();
-    const from = document.getElementById("from").value;
-    const to = document.getElementById("to").value;
-
-
-    for (item in jsonFlights) {
-        //flightNumber == "" ? flightNumber = jsonFlights[item].number : flightNumber;
-        //country == "" ? country = jsonFlights[item].country : country;
-        //city == "" ? city = jsonFlights[item].city : city;
-        //from == "" ? from = jsonFlights[item].schedueTime : from;
-        //to == "" ? to = jsonFlights[item].schedueTime : to;
-        if (flightNumber == jsonFlights[item].number && country == jsonFlights[item].country) { }
-    }
-
-
-    console.log(flightType);// checked value
-}
-
-tableFilterDraft();
 
 // Filter the table based on the selected filters
 function filterTable() {
@@ -139,14 +115,13 @@ function filterTable() {
     const city = document.getElementById("city").value.trim();
     const from = document.getElementById("from").value;
     const to = document.getElementById("to").value;
-    console.log(country, city, from, to, flightType[0].checked, flightType[1].checked);
+    //console.log(country, city, from, to, flightType[0].checked, flightType[1].checked);
 
     // Remove the no match container if it exists
     if (document.querySelector(".no-match-container")) {
         document.querySelector(".no-match-container").remove();
         table.style.display = "block";
     }
-
 
     // when all filters are empty
     if (country == "" && city == "" && flightNumber == "" && from == "" && to == "" && !flightType[0].checked && !flightType[1].checked) {
@@ -167,7 +142,6 @@ function filterTable() {
         for (let item in jsonFlights) {
             const schedueTime = new Date(jsonFlights[item].schedueTime).toLocaleDateString([], { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false }).trim();
             const actualTime = new Date(jsonFlights[item].actualTime).toLocaleDateString([], { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false }).trim();
-
 
             // when only one filter is selected
             if (country == jsonFlights[item].country && city == "" && flightNumber == "" && from == "" && to == "" && flightType[0].checked && flightType[1].checked) {
@@ -393,7 +367,7 @@ function filterTable() {
             }
         }
     }
-    const tableRows = document.querySelectorAll("tr");
+    const tableRows = document.querySelectorAll("tbody tr");
     const mainTable = document.getElementById("table-body").querySelectorAll("tr");
     mainTable.forEach((row) => row.addEventListener("click", showFullInfo));
     tableRows.forEach((row) => changeRowColor(row, lightBlue));
@@ -418,7 +392,7 @@ function generateTable(item, schedueTime, actualTime) {
             <td>${jsonFlights[item].country}</td>
             <td>${jsonFlights[item].terminal}</td>
             <td>${jsonFlights[item].status}</td>`;
-    tableBody.appendChild(bodyRow)
+    tableBody.appendChild(bodyRow);
     if (fixTime(schedueTime) != fixTime(actualTime)) {
         var fourthChild = bodyRow.children[3];
         var fifthChild = bodyRow.children[4];
@@ -432,6 +406,7 @@ function generateTable(item, schedueTime, actualTime) {
         bodyRow.style.backgroundColor = "#96c8d8";
     }
 }
+
 
 // flag for Countries sorting
 let ascendingCountry = true;
@@ -567,7 +542,7 @@ function showFullInfo(event) {
         firstCell.appendChild(image);
         tbody.appendChild(firstCell);
 
-        // Create a new row for the popup
+        // Create a new row for the modal
         tbody.innerHTML += `
             <td>${flight.operatorShort}</td>
             <td>${flight.number}</td>
@@ -586,7 +561,7 @@ function showFullInfo(event) {
         tbody.firstChild.id = "temp-row";
         fullInfoTable.appendChild(tbody);
 
-        // Show the popup
+        // Show the modal
         flightInfo.style.display = "block";
 
         // Add event listener to the city cell to open a new tab with the wikipedia page of the city
@@ -601,10 +576,10 @@ document.getElementById("close-button").addEventListener("click", function () {
     document.getElementById("temp-row").remove();
 
 });
-// Add event listeners to the rows in the table to show popup with full information
+
+// Add event listeners to the rows in the table to show modal with full information
 const mainTable = document.getElementById("flights-table").querySelectorAll("tr");
 mainTable.forEach(row => row.addEventListener("click", showFullInfo));
-
 
 // Function to open a new tab with the wikipedia page of the city
 function linkToCountriesInfo(event) {
@@ -615,8 +590,6 @@ function linkToCountriesInfo(event) {
     window.open(url, "_blank");
 
 }
-
-
 
 // Function to change the background color of a row when the mouse hovers over it
 function changeRowColor(rows, color) {

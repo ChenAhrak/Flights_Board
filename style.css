@@ -76,7 +76,7 @@ tr {
 .flight-type-fields {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 15px;
     font-size: 30px;
 }
 
@@ -117,7 +117,6 @@ button {
 
 
 button {
-    /*width: calc(33.33% - 10px);*/
     /* Adjust width as needed */
     background-color: #007bff;
     color: #fff;
@@ -130,7 +129,6 @@ button {
 
 button:hover {
     background-color: #0056b3;
-    /* Darker shade of primary color */
 }
 
 
@@ -139,7 +137,6 @@ button:hover {
     align-items: center;
     justify-content: center;
     padding-top: 30px;
-
 }
 
 .headImg {
@@ -185,7 +182,7 @@ button:hover {
 }
 
 
-/* Popup container */
+/* Modal container */
 #full-info {
     width: fit-content;
     height: auto;
@@ -200,7 +197,6 @@ button:hover {
 
 #full-info tbody :hover {
     background-color: #c9d1f5;
-
 }
 
 
@@ -226,11 +222,13 @@ button:hover {
 
 .sortButtons {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 30px;
     padding-bottom: 20px;
     padding-top: 60px;
+    padding-right: 30px;
 }
 
 .sortButtons button {

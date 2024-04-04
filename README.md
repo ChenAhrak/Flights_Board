@@ -29,3 +29,7 @@ The Flight Board Project is a web application that displays information about fl
 
    ```bash
    git clone https://github.com/your-username/flight-board.git
+
+
+https://github.com/ChenAhrak/Flight_Project/assets/122440957/4b34ae84-e26e-412e-a000-c13d6634beed
+

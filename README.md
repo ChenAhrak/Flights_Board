@@ -23,13 +23,6 @@ The Flight Board Project is a web application that displays information about fl
 - JavaScript
 - Plotly.js (for generating pie charts)
 
-## Setup
+[Watch the Demo Video](https://github.com/ChenAhrak/Flight_Project/assets/122440957/4b34ae84-e26e-412e-a000-c13d6634beed) (Replace this link with the name of your video)
 
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/your-username/flight-board.git
-
-
-https://github.com/ChenAhrak/Flight_Project/assets/122440957/4b34ae84-e26e-412e-a000-c13d6634beed
 
